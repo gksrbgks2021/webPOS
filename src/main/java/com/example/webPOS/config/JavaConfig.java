@@ -18,12 +18,6 @@ public class JavaConfig {
 
     @Bean
     public MemberDAO memberDAO(){
-        return new MemberDAO() {
-            @Override
-            public String loginCheck(MemberDTO dto) {
-                return null;
-            }
-        }
     }
 
 }

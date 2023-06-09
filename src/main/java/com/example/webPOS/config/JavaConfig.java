@@ -3,7 +3,6 @@ package com.example.webPOS.config;
 import com.example.webPOS.dao.MemberDAO;
 import com.example.webPOS.dao.MemberDaoImpl;
 import com.example.webPOS.service.MemberRegisterService;
-import com.example.webPOS.service.MemberService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -44,10 +43,6 @@ public class JavaConfig {
         return new MemberDaoImpl(dataSource);
     }
 
-    @Bean
-    public MemberService memberService(MemberDAO memberDAO) {
-        return new MemberService(memberDAO);
-    }
 
     @Bean
     public MemberRegisterService memberRegisterService(MemberDAO memberDAO){

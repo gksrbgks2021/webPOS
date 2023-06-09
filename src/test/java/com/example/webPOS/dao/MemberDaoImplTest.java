@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.jupiter.api.Assertions.*;
 import jakarta.validation.Valid;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest // 스프링 컨텍스트 등록
@@ -27,8 +28,19 @@ class MemberDaoImplTest {
         System.out.println(rs.getEmail());
     }
     @Test
-    void save() {
+    void 회원가입테스트() {
+        MemberDTO member = new MemberDTO(
+                "password123",
+                "John Doe",
+                "test@example.com",
+                "member",
+                LocalDateTime.now()
+        );
 
+        memberDAO.save(member);
+
+        MemberDTO rs = memberDAO.findByEmail(member.getEmail());
+        assertEquals(member.getEmail(),rs.getEmail());
     }
 
     @Test

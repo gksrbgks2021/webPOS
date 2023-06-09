@@ -32,8 +32,6 @@ public class RegisterController {
     public String handleStep2(@RequestParam(value = "agree",defaultValue = "false")
                               Boolean agree, Model model) {
 
-        System.out.println("postmapping register/step2 들어옴.");
-
         if (!agree) {//약관 동의 안했으면
             System.out.println("동의안함");
             return "register/step1";
@@ -44,7 +42,6 @@ public class RegisterController {
 
     @GetMapping("/register/step2")
     public String handleStep2Get() {
-        System.out.println("@GetMapping('/register/step2') 들어옴");
         return "redirect:/register/step1"; }
 
     @PostMapping("/register/step3")

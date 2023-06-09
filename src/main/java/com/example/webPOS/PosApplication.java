@@ -4,8 +4,10 @@ import com.example.webPOS.config.JavaConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class PosApplication {
 	public static void main(String[] args) {
 		PosApplication posApplication = new PosApplication();

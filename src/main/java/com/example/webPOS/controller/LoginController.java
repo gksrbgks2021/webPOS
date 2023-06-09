@@ -11,19 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class LoginController {
 
     @RequestMapping("/")
     public String login(){
-        System.out.println("로그인 페이지 이동");
         return "register/login";
     }
 
     @RequestMapping("login")
     public String login(HttpServletRequest request, HttpSession session) throws Exception {
-        System.out.println("login 메소드");
         //코드수정
         MemberDTO result = null;
         if(result == null) {

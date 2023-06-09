@@ -1,24 +1,25 @@
 package com.example.webPOS.config;
 
-import com.example.webPOS.controller.LoginController;
-import com.example.webPOS.controller.MemberController;
 import com.example.webPOS.dao.MemberDAO;
 import com.example.webPOS.dao.MemberDaoImpl;
-import com.example.webPOS.dto.MemberDTO;
-import com.example.webPOS.service.LoginService;
 import com.example.webPOS.service.MemberRegisterService;
 import com.example.webPOS.service.MemberService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Configuration
 @ComponentScan(basePackages = "com.example.webPOS")
 public class JavaConfig {
-    //Bean 등록할때,public {타입} {빈이름} 으로 등록.
-    //database 접근 메소드
+
+    /**
+     * Bean 등록할때,public {타입} {빈이름} 으로 등록.
+     *
+     * database 접근 메소드
+     * @return dataSource
+     */
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         DataSource ds = new DataSource();
@@ -34,8 +35,9 @@ public class JavaConfig {
         return ds;
     }
 
-    /*로그인 관련 빈 등록*/
-
+    /**
+     * 멤버관련 빈 등록
+     */
 
     @Bean
     public MemberDAO memberDAO(DataSource dataSource) {

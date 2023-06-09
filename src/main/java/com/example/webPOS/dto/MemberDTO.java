@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-
 public class MemberDTO {
     private Long id;//유저 아이디
     private String password;//비밀번호

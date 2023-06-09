@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-
 public class MemberRegisterService {
 
     private MemberDAO memberDao;
@@ -25,9 +24,9 @@ public class MemberRegisterService {
             throw new Exception("DuplicateMemberException");
         }
         MemberDTO newMember = new MemberDTO(
-                registerDTO.getEmail(),
                 registerDTO.getPassword(),
                 registerDTO.getName(),
+                registerDTO.getEmail(),
                 registerDTO.getRole(),
                 LocalDateTime.now());
         memberDao.save(newMember);

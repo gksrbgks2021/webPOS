@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class MemberRegisterServiceTest {
@@ -20,11 +22,11 @@ class MemberRegisterServiceTest {
     private MemberDAO memberDao;
 
     @Test
-    @Transactional
+    @Transactional //transactoinal 키워드는 db 연동하고, commit한것을 rollback 즉. 이 작업을 저장안한다는 뜻이다.
     public void testRegist() throws Exception {
         // Given
         RegisterDTO registerDTO = new RegisterDTO();
-        registerDTO.setEmail("test@example.com");
+        registerDTO.setEmail("test2@example.com");
         registerDTO.setPassword("password123");
         registerDTO.setName("John Doe");
         registerDTO.setRole("staff");
@@ -34,6 +36,7 @@ class MemberRegisterServiceTest {
         // When
         Long memberId = memberService.regist(registerDTO);
 
+        System.out.println(memberId);
 
         // Then
         MemberDTO savedMember = memberDao.findByEmail(registerDTO.getEmail());
@@ -43,6 +46,4 @@ class MemberRegisterServiceTest {
         Assertions.assertEquals(registerDTO.getName(), savedMember.getName());
         Assertions.assertEquals(registerDTO.getRole(), savedMember.getRole());
     }
-
-
 }

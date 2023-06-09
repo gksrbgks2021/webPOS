@@ -1,4 +1,3 @@
-<jsp:useBean id="RegisterDTO" scope="request" type="com.example.webPOS.dto.MemberDTO"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 

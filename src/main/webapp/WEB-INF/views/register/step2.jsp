@@ -6,12 +6,12 @@
         <title>회원가입</title>
         <script>
             function checkPassword() {
-                var password = document.getElementById("password").value;
-                var confirmPasswordInput = document.getElementById("confirmPassword");
-                var confirmPassword = confirmPasswordInput.value;
-                var emailInput = document.getElementById("email");
-                var email = emailInput.value;
-                var emailRegex = /^[a-zA-Z0-9]([-_\.]?[0-9a-zA-Z])*@[a-zA-Z0-9]([-_\.]?[a-zA-Z0-9])*\.[a-zA-Z]{2,3}$/;
+                let password = document.getElementById("password").value;
+                let confirmPasswordInput = document.getElementById("confirmPassword");
+                let confirmPassword = confirmPasswordInput.value;
+                let emailInput = document.getElementById("email");
+                let email = emailInput.value;
+                let emailRegex = /^[a-zA-Z0-9]([-_\.]?[0-9a-zA-Z])*@[a-zA-Z0-9]([-_\.]?[a-zA-Z0-9])*\.[a-zA-Z]{2,3}$/;
 
                 if (password !== confirmPassword) {
                     alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");

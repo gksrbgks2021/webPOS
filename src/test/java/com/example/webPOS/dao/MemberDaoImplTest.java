@@ -22,7 +22,6 @@ class MemberDaoImplTest {
         MemberDTO rs = memberDAO.findByEmail(email);//쿼리 작동하는지 확인
         assertNotNull(rs);
     }
-
     @Test
     void save() {
     }

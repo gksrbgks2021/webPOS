@@ -18,4 +18,5 @@ public class MemberController {
     public String createForm(){
         return "register/createMemberForm";
     }
+
 }

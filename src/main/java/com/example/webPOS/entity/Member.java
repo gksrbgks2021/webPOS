@@ -1,14 +1,10 @@
-package com.example.webPOS.dto;
-
+package com.example.webPOS.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-
-public class MemberDTO {
+public class Member {
     private Long id;//유저 아이디
     private String password;//비밀번호
     private String name;//유저 이름
@@ -17,7 +13,7 @@ public class MemberDTO {
     private LocalDateTime datetime;//등록한 날짜 정보
 
     //생성자는 id 뺴고 만들었음. id가 primary key임
-    public MemberDTO(String password, String name, String email, String role, LocalDateTime datetime) {
+    public Member(String password, String name, String email, String role, LocalDateTime datetime) {
         this.password = password;
         this.name = name;
         this.email = email;

@@ -14,8 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.beans.BeanProperty;
-
 @Configuration
 @ComponentScan(basePackages = "com.example.webPOS")
 public class JavaConfig {
@@ -38,12 +36,6 @@ public class JavaConfig {
 
     /*로그인 관련 빈 등록*/
 
-    /*멤버 관련 빈 등록*/
-    @Bean
-    @Scope("prototype")
-    public MemberDTO memberDTO() {
-        return new MemberDTO();
-    }
 
     @Bean
     public MemberDAO memberDAO(DataSource dataSource) {
@@ -54,6 +46,7 @@ public class JavaConfig {
     public MemberService memberService(MemberDAO memberDAO) {
         return new MemberService(memberDAO);
     }
+
     @Bean
     public MemberRegisterService memberRegisterService(MemberDAO memberDAO){
         return new MemberRegisterService(memberDAO);

@@ -18,16 +18,17 @@ public class MemberRegisterService {
         this.memberDao = memberDao;
     }
 
-    public int regist(RegisterDTO req) throws Exception {
-        MemberDTO member = memberDao.findByEmail(req.getEmail());
+    //회원 등록
+    public Long regist(RegisterDTO registerDTO) throws Exception {
+        MemberDTO member = memberDao.findByEmail(registerDTO.getEmail());
         if (member != null) {
             throw new Exception("DuplicateMemberException");
         }
         MemberDTO newMember = new MemberDTO(
-                req.getEmail(),
-                req.getPassword(),
-                req.getName(),
-                req.getRole(),
+                registerDTO.getEmail(),
+                registerDTO.getPassword(),
+                registerDTO.getName(),
+                registerDTO.getRole(),
                 LocalDateTime.now());
         memberDao.save(newMember);
         return newMember.getId();

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberDaoImpl implements MemberDAO{
+public class MemberDaoImpl implements MemberDAO {
     private JdbcTemplate jdbcTemplate;
 
     //생성자로 bean 자동 주입
@@ -62,7 +62,7 @@ public class MemberDaoImpl implements MemberDAO{
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(
                         "insert into MEMBER (EMAIL, PASSWORD, NAME,ROLE, REGDATE) values (?, ?, ?, ?,?)",
-                        new String[] { "ID" });
+                        new String[]{"ID"});
                 pstmt.setString(1, member.getEmail());
                 pstmt.setString(2, member.getPassword());
                 pstmt.setString(3, member.getName());
@@ -72,12 +72,21 @@ public class MemberDaoImpl implements MemberDAO{
             }
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
-        member.setId(keyValue.intValue());
+        member.setId(keyValue.longValue());
     }
-
     @Override
-    public ArrayList<MemberDTO> showMember() {
-        return null;
+    public List<MemberDTO> selectAll() {
+        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER", (ResultSet rs, int rowNum) -> {
+            MemberDTO member = new MemberDTO(
+                    rs.getString("PASSWORD"),
+                    rs.getString("NAME"),
+                    rs.getString("EMAIL"),
+                    rs.getString("ROLE"),
+                    rs.getTimestamp("REGDATE").toLocalDateTime());
+            member.setId(rs.getLong("ID"));
+            return member;
+        });
+        return results;
     }
 
     @Override

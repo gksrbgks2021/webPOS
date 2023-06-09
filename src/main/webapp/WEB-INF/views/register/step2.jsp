@@ -50,28 +50,32 @@
 <form action="step3" method="post">
     <p> <label>이메일:<br>
         <input type="text" name="email" id="email">
-    </label> </p>
+    </label>
+        <button type ="button" onclick = "fn_dbCheckId()" name=""dbCheckId "class = "checkId">
+        중복 확인
+        </button>
+    </p>
     <!--이메일 중복 체크 구현 -->
 
     <!---->
 
     <p> <label>이름:<br>
-        <input type="text" name="name" id="name" >
+        <input type="text" name="name" id="name" required>
     </label> </p>
     <p> <label>비밀번호:<br>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" required>
     </label> </p>
     <p> <label>비밀번호 확인:<br>
-        <input type="password" name="confirmPassword" id="confirmPassword">
+        <input type="password" name="confirmPassword" id="confirmPassword" required>
     </label> </p>
 
-    <select name="role" size = '1'>
+    <select name="role" size = '1' required>
         <option value ='' selected>-- 선택 --</option>
         <option value ='staff'>직원</option>
         <option value ='manager'>매니저</option>
     </select>
 
-    <input type="submit" onclick="javascript:CheckMember()" value="가입 완료">
+    <input type="submit" onclick="javascript:CheckMember()" value="가입 완료" required >
 </form>
 
 </body>

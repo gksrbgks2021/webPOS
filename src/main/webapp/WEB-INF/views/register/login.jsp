@@ -10,8 +10,8 @@
         <h1>편의점 POS 시스템</h1>
         <h2>로그인</h2>
         <form action="#" method="post">
-            <p> <label>ID:<br><input type="text" name="ID" id="ID"></label> </p>
-            <p> <label>PASSWORD:<br><input type="text" name="password" id="password"></label> </p>
+            <p> <label>ID:<br><input type="text" name="ID" id="ID" required></label> </p>
+            <p> <label>PASSWORD:<br><input type="text" name="password" id="password" required></label> </p>
             <input
                 type="submit" value="login">
         </form>

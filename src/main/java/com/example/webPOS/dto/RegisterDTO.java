@@ -8,6 +8,7 @@ public class RegisterDTO {
     private String name;
     private String role;
 
+    public RegisterDTO(){}
     public RegisterDTO(String email, String password, String confirmPassword, String name, String role) {
         this.email = email;
         this.password = password;

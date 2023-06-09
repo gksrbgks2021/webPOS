@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -62,7 +63,7 @@ public class MemberDaoImpl implements MemberDAO {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(
                         "insert into MEMBER (EMAIL, PASSWORD, NAME,ROLE, REGDATE) values (?, ?, ?, ?,?)",
-                        new String[]{"ID"});
+                        new String[]{"ID"}); //생성된 id의 기본 키 값 반환
                 pstmt.setString(1, member.getEmail());
                 pstmt.setString(2, member.getPassword());
                 pstmt.setString(3, member.getName());
@@ -72,7 +73,7 @@ public class MemberDaoImpl implements MemberDAO {
             }
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
-        member.setId(keyValue.longValue());
+        member.setId(keyValue.longValue());//id 삽입
     }
     @Override
     public List<MemberDTO> selectAll() {
@@ -91,17 +92,35 @@ public class MemberDaoImpl implements MemberDAO {
 
     @Override
     public MemberDTO findByEmail(String email) {
-        //쿼리문
-        String query = "SELECT * FROM MEMBER WHERE email = ?";
-        //실행한 쿼리문을 리스트로 받아온다.
-        List<MemberDTO> results = jdbcTemplate.query(query,
-                (rs, rowNum) -> new MemberDTO(rs.getString("password"),
+        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER where EMAIL = ?", new RowMapper<MemberDTO>() {
+            @Override
+            public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDTO member = new MemberDTO(rs.getString("password"),
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("role"),
-                        rs.getTimestamp("regdate").toLocalDateTime()),
-                email);
-        //리스트 길이가 0 이면 null 반환
+                        rs.getTimestamp("regdate").toLocalDateTime());
+                member.setId(rs.getLong("ID"));
+                return member;
+            }
+        }, email);
+        return results.isEmpty() ? null : results.get(0);
+    }
+    @Override
+    public MemberDTO findById(Long id){
+//쿼리문
+        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER where ID = ?", new RowMapper<MemberDTO>() {
+            @Override
+            public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                MemberDTO member = new MemberDTO(rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getTimestamp("regdate").toLocalDateTime());
+                member.setId(rs.getLong("ID"));
+                return member;
+            }
+        }, id);
         return results.isEmpty() ? null : results.get(0);
     }
 }

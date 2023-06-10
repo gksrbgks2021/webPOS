@@ -10,13 +10,13 @@
     <body>
         <h1>편의점 POS 시스템</h1>
         <h2>로그인</h2>
-        <form action="#" method="post">
+        <form action="login" method="post">
             <p> <label>ID:<br><input type="text" name="ID" id="ID" required></label> </p>
             <p> <label>PASSWORD:<br><input type="text" name="password" id="password" required></label> </p>
             <input
                 type="submit" value="login">
         </form>
-        <form action="register/step1" method="post">
+        <form action="register/" method="post">
             <input type="submit" value="create an account">
         </form>
 

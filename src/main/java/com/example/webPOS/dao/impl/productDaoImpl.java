@@ -1,6 +1,7 @@
-package com.example.webPOS.dao;
+package com.example.webPOS.dao.impl;
 
-import com.example.webPOS.dto.ProductDTO;
+import com.example.webPOS.dao.interfaces.productDAO;
+import com.example.webPOS.dto.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -18,7 +19,7 @@ public class productDaoImpl implements productDAO {
     productDaoImpl(JdbcTemplate jdbcTemplate){this.jdbcTemplate = jdbcTemplate;}
 
     @Override
-    public boolean save(ProductDTO product) {
+    public boolean save(Product product) {
         int rowsAffected = jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {

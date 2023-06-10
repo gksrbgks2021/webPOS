@@ -1,19 +1,16 @@
 package com.example.webPOS.controller;
 
-import com.example.webPOS.dto.MemberDTO;
-import com.example.webPOS.dto.RegisterDTO;
+import com.example.webPOS.dto.form.LoginForm;
+import com.example.webPOS.dto.form.RegisterForm;
 import com.example.webPOS.service.MemberRegisterService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class RegisterController {
@@ -25,8 +22,10 @@ public class RegisterController {
         this.memberRegisterService = memberRegisterService;
     }
 
-    @PostMapping("/register/step1")
-    public String handleStep1() { return "register/step1"; }
+    @PostMapping("register/")
+    public String handleStep1() {
+        System.out.println("handlestep1");
+        return "register/step1"; }
 
     @PostMapping("/register/step2")
     public String handleStep2(@RequestParam(value = "agree",defaultValue = "false")
@@ -36,36 +35,33 @@ public class RegisterController {
             System.out.println("동의안함");
             return "register/step1";
         }
+        model.addAttribute("registerform", new RegisterForm());
 
         return "register/step2";
     }
 
     @GetMapping("/register/step2")
     public String handleStep2Get() {
-        return "redirect:/register/step1"; }
+        return "redirect:/register/step1";
+    }
 
     @PostMapping("/register/step3")
-    public String handleStep3(HttpServletRequest request) {
+    public String handleStep3(HttpServletRequest request, Model model) {
         String e = request.getParameter("email");
         String n = request.getParameter("name");
         String p = request.getParameter("password");
         String cp = request.getParameter("confirmPassword");
         String r = request.getParameter("role");
 
-        RegisterDTO reg = new RegisterDTO(e,p,cp,n,r);
-        if(reg.isPasswordEqualToConfirmPassword()){//패스워드 같음
+        RegisterForm reg = new RegisterForm(e,p,cp,n,r);
 
-        }
         try {
             memberRegisterService.regist(reg);
+            model.addAttribute("name",n);
             return "register/step3";
         } catch (Exception ex) {//이메일 중복.
             return "register/step2";
         }
     }
 
-    @Autowired
-    public void setMemberRegisterService(MemberRegisterService memberRegisterService){
-        this.memberRegisterService = memberRegisterService;
-    }
 }

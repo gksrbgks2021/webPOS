@@ -1,7 +1,7 @@
 package com.example.webPOS.service;
 
-import com.example.webPOS.dao.MemberDAO;
-import com.example.webPOS.dto.MemberDTO;
+import com.example.webPOS.dao.interfaces.MemberDAO;
+import com.example.webPOS.dto.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,13 @@ public class LoginService {
         return memberDAO;
     }
 
-    public MemberDTO login(MemberDTO memberDTO){
-        MemberDTO result = memberDAO.findByEmail(memberDTO.getEmail());
-        return result;
+    /**
+     *
+     * @return null is login failed
+     */
+    public Member login(String email, String pw){
+        Member result =  memberDAO.findByEmail(email);
+        return result.getPassword().equals(pw) ? result : null;
     }
 
 }

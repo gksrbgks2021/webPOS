@@ -1,14 +1,14 @@
 package com.example.webPOS.dto;
 
-public class ProductDTO {
+public class Product {
     private String productId;
     private long netPrice;
     private long costPrice;
     private String name;
 
-    ProductDTO() {}
+    Product() {}
 
-    ProductDTO(String productId, long netPrice, long costPrice, String name) {
+    Product(String productId, long netPrice, long costPrice, String name) {
         this.productId = productId;
         this.netPrice = netPrice;
         this.costPrice = costPrice;

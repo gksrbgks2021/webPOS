@@ -33,21 +33,21 @@
         <h2>회원 정보 입력</h2>
         <form action="step3" method="post" onsubmit="return checkPassword()">
             <label for="email">이메일:</label><br>
-            <input type="text" id="email" name="email"><br>
+            <input type="text" id="email" name="email" value="${registerform.email}"><br>
 
             <label for="name">이름:</label><br>
-            <input type="text" id="name" name="name"><br>
+            <input type="text" id="name" name="name" value="${registerform.name}"><br>
 
             <label for="password">비밀번호:</label><br>
-            <input type="password" id="password" name="password"><br>
+            <input type="password" id="password" name="password" value="${registerform.password}"><br>
 
             <label for="confirmPassword">비밀번호 확인:</label><br>
-            <input type="password" id="confirmPassword" name="confirmPassword"><br>
+            <input type="password" id="confirmPassword" name="confirmPassword" value="${registerform.confirmPassword}"><br>
 
-            <select name="role" size='1'>
-                <option value='' selected>-- 선택 --</option>
-                <option value='staff'>직원</option>
-                <option value='manager'>매니저</option>
+            <select name="role" size='1' >
+                <option value='' ${registerform.role == null ? 'selected' : ''}>-- 선택 --</option>
+                <option value='staff' ${registerform.role == 'staff' ? 'selected' : ''}>직원</option>
+                <option value='manager' ${registerform.role == 'manager' ? 'selected' : ''}>매니저</option>
             </select>
 
             <input type="submit" value="가입 완료">

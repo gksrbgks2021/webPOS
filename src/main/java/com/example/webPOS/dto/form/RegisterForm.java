@@ -1,15 +1,15 @@
-package com.example.webPOS.dto;
+package com.example.webPOS.dto.form;
 
 //회원가입 양식
-public class RegisterDTO {
+public class RegisterForm {
     private String email;
     private String password;
     private String confirmPassword;
     private String name;
     private String role;
 
-    public RegisterDTO(){}
-    public RegisterDTO(String email, String password, String confirmPassword, String name, String role) {
+    public RegisterForm(){}
+    public RegisterForm(String email, String password, String confirmPassword, String name, String role) {
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;

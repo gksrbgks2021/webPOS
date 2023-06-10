@@ -8,8 +8,8 @@
     <title>회원가입 성공</title>
 </head>
 <body>
-<p><strong>${registerRequest.name}님</strong>
+<p><strong>${name}님</strong>
     회원 가입을 완료했습니다.</p>
-<p><a href='/login' />[로그인 페이지 이동]</a></p>
+<p><a href='/' />[로그인 페이지 이동]</a></p>
 </body>
 </html>

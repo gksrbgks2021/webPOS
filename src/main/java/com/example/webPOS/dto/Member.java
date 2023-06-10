@@ -1,6 +1,5 @@
-package com.example.webPOS.entity;
+package com.example.webPOS.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -25,7 +24,7 @@ public class Member {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -67,5 +66,17 @@ public class Member {
 
     public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", datetime=" + datetime +
+                '}';
     }
 }

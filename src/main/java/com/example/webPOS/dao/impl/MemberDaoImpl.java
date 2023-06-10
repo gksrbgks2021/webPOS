@@ -1,6 +1,7 @@
-package com.example.webPOS.dao;
+package com.example.webPOS.dao.impl;
 
-import com.example.webPOS.dto.MemberDTO;
+import com.example.webPOS.dao.interfaces.MemberDAO;
+import com.example.webPOS.dto.Member;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,11 +23,11 @@ public class MemberDaoImpl implements MemberDAO {
 
     //db 접속해서 loginCheck 하는 기능입니다.
     @Override
-    public String loginCheck(MemberDTO dto) {
+    public String loginCheck(Member dto) {
         String query = "SELECT * FROM member WHERE email = ? AND password = ?";
         try {
-            List<MemberDTO> members = jdbcTemplate.query(query,
-                    (rs, rowNum) -> new MemberDTO(rs.getString("password"),
+            List<Member> members = jdbcTemplate.query(query,
+                    (rs, rowNum) -> new Member(rs.getString("password"),
                             rs.getString("name"),
                             rs.getString("email"),
                             rs.getString("role"),
@@ -49,7 +50,7 @@ public class MemberDaoImpl implements MemberDAO {
     }
 
     @Override
-    public void save(MemberDTO member) {
+    public void save(Member member) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -69,9 +70,9 @@ public class MemberDaoImpl implements MemberDAO {
         member.setId(keyValue.longValue());//id 삽입
     }
     @Override
-    public List<MemberDTO> selectAll() {
-        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER", (ResultSet rs, int rowNum) -> {
-            MemberDTO member = new MemberDTO(
+    public List<Member> selectAll() {
+        List<Member> results = jdbcTemplate.query("select * from MEMBER", (ResultSet rs, int rowNum) -> {
+            Member member = new Member(
                     rs.getString("PASSWORD"),
                     rs.getString("NAME"),
                     rs.getString("EMAIL"),
@@ -84,11 +85,11 @@ public class MemberDaoImpl implements MemberDAO {
     }
 
     @Override
-    public MemberDTO findByEmail(String email) {
-        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER where EMAIL = ?", new RowMapper<MemberDTO>() {
+    public Member findByEmail(String email) {
+        List<Member> results = jdbcTemplate.query("select * from MEMBER where EMAIL = ?", new RowMapper<Member>() {
             @Override
-            public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                MemberDTO member = new MemberDTO(rs.getString("password"),
+            public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Member member = new Member(rs.getString("password"),
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("role"),
@@ -100,12 +101,12 @@ public class MemberDaoImpl implements MemberDAO {
         return results.isEmpty() ? null : results.get(0);
     }
     @Override
-    public MemberDTO findById(Long id){
+    public Member findById(Long id){
 //쿼리문
-        List<MemberDTO> results = jdbcTemplate.query("select * from MEMBER where ID = ?", new RowMapper<MemberDTO>() {
+        List<Member> results = jdbcTemplate.query("select * from MEMBER where ID = ?", new RowMapper<Member>() {
             @Override
-            public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                MemberDTO member = new MemberDTO(rs.getString("password"),
+            public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Member member = new Member(rs.getString("password"),
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("role"),

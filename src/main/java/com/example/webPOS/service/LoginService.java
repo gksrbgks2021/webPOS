@@ -25,7 +25,10 @@ public class LoginService {
      */
     public Member login(String email, String pw){
         Member result =  memberDAO.findByEmail(email);
-        return result.getPassword().equals(pw) ? result : null;
+        if(result == null) {
+            System.out.println("null value");
+        }
+        return (result != null && result.getPassword().equals(pw)) ? result : null;
     }
 
 }

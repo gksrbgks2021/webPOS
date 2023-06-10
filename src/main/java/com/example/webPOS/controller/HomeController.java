@@ -1,5 +1,6 @@
 package com.example.webPOS.controller;
 
+import com.example.webPOS.constants.ModelConstants;
 import com.example.webPOS.dto.Member;
 import com.example.webPOS.constants.SessionConstants;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,10 @@ public class HomeController {
     @GetMapping("/home")
     public String showbutton(Model model,
                              @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member){
+
         if(member != null){
+            model.addAttribute("name",member.getName());
+
             return "home/main";
         }else{
             return "redirect:/login";

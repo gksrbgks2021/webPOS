@@ -8,7 +8,6 @@ public class LoginForm {
     @Email
     @NotBlank
     private String id;
-
     @NotBlank
     private String password;
 
@@ -34,5 +33,10 @@ public class LoginForm {
 
     public void setPassword(String passwd) {
         this.password = passwd;
+    }
+
+    public void initForm(){
+        this.id = "";
+        this.password = "";
     }
 }

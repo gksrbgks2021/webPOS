@@ -98,6 +98,7 @@ public class MemberDaoImpl implements MemberDAO {
                 return member;
             }
         }, email);
+
         return results.isEmpty() ? null : results.get(0);
     }
     @Override

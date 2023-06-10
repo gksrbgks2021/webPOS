@@ -17,7 +17,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.google.common.base.Joiner;
-import com.google.gson.Gson;
 
 @Component // 1
 @Aspect // 2

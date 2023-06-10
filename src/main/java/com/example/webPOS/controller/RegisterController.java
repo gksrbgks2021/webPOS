@@ -35,6 +35,9 @@ public class RegisterController {
             System.out.println("동의안함");
             return "register/step1";
         }
+        /**
+         * make form instance and add to model
+         */
         model.addAttribute("registerform", new RegisterForm());
 
         return "register/step2";

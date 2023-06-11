@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
+//config에 수동 빈 등록함.
 public class MemberRegisterService {
 
     private MemberDAO memberDao;

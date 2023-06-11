@@ -31,4 +31,5 @@ public class StoreInfoDaoImpl implements StoreInfoDAO {
                 });
         return results;
     }
+
 }

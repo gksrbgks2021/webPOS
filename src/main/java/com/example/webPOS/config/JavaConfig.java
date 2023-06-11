@@ -1,9 +1,11 @@
 package com.example.webPOS.config;
 
 import com.example.webPOS.dao.impl.InventoryDaoImpl;
+import com.example.webPOS.dao.impl.StoreInfoDaoImpl;
 import com.example.webPOS.dao.interfaces.InventoryDAO;
 import com.example.webPOS.dao.interfaces.MemberDAO;
 import com.example.webPOS.dao.impl.MemberDaoImpl;
+import com.example.webPOS.dao.interfaces.StoreInfoDAO;
 import com.example.webPOS.dto.Inventory;
 import com.example.webPOS.service.MemberRegisterService;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -27,7 +29,7 @@ public class JavaConfig {
         DataSource ds = new DataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds.setUrl("jdbc:mysql://localhost/posdb?characterEncoding=utf8&serverTimezone=UTC");
-        ds.setUsername("posadmin");
+        ds.setUsername("posmanager");
         ds.setPassword("admin1234");
         ds.setInitialSize(2);
         ds.setMaxActive(10);
@@ -51,6 +53,12 @@ public class JavaConfig {
         return new MemberRegisterService(memberDAO);
     }
 
+    /**
+     * storeInfo 관련 빈 등록
+     */
+
+    @Bean
+    public StoreInfoDAO storeInfoDAO(DataSource dataSource){return new StoreInfoDaoImpl(dataSource);}
     /**
      *
      * 인벤토리 관련 빈 등록

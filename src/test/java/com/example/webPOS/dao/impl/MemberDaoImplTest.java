@@ -1,4 +1,4 @@
-package com.example.webPOS.dao;
+package com.example.webPOS.dao.impl;
 
 import com.example.webPOS.dao.interfaces.MemberDAO;
 import com.example.webPOS.dto.Member;
@@ -17,7 +17,7 @@ class MemberDaoImplTest {
     private MemberDAO memberDAO;
 
     @Test
-    void loginCheck() {
+    void findByEmail() {
         String email = "han@google.com";//실제 있는데이터.
         Member rs = memberDAO.findByEmail(email);//쿼리 작동하는지 확인
         assertEquals(rs.getEmail(), email);//요청한 이메일과 받아온 이메일이 동일한지 확인
@@ -55,7 +55,4 @@ class MemberDaoImplTest {
             System.out.println(m.toString());
     }
 
-    @Test
-    void findByEmail() {
-    }
 }

@@ -1,23 +1,23 @@
 package com.example.webPOS.dto;
 
 public class Inventory {
-    private String productId;
+    private Long productId;
     private int quantity;
     private String storeName;
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
     public Inventory(){}
 
-    public Inventory(String productId, int quantity, String storeName) {
+    public Inventory(Long productId, int quantity, String storeName) {
         this.productId = productId;
         this.quantity = quantity;
         this.storeName = storeName;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

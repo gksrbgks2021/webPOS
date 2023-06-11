@@ -15,6 +15,16 @@ public class InventoryDaoImpl implements InventoryDAO {
 
 	private JdbcTemplate jdbcTemplate;
 
+	String sqlQeury;
+
+	public String getSqlQeury() {
+		return sqlQeury;
+	}
+
+	public void setSqlQeury(String sqlQeury) {
+		this.sqlQeury = sqlQeury;
+	}
+
 	@Autowired
 	public InventoryDaoImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -22,38 +32,53 @@ public class InventoryDaoImpl implements InventoryDAO {
 
 	@Override
 	public List<Inventory> findAll(String storeName) {
-		List<Inventory> results = jdbcTemplate.query("select * from INVENTORY WHERE storename = ?",
+		setSqlQeury("select * from INVENTORY WHERE storename = ?");
+		List<Inventory> results = jdbcTemplate.query(getSqlQeury(),
 				(ResultSet rs, int rowNum) -> {
-					Inventory inventory = new Inventory(rs.getString("productid"), rs.getInt("quantity"),
+					Inventory inventory = new Inventory(
+							rs.getLong("productid"),
+							rs.getInt("quantity"),
 							rs.getString("storename"));
 					return inventory;
 				}, storeName);
 		return results;
 	}
 
-	public int getQuantityByProductId(String productID, String storeName) {
-		return jdbcTemplate.queryForObject("SELECT quantity FROM inventory WHERE productid = ?" + " AND storename = ?",
+	public int getQuantityByProductId(Long productID, String storeName) {
+		setSqlQeury("SELECT quantity FROM inventory WHERE productid = ? AND storename = ?");
+		return jdbcTemplate.queryForObject(getSqlQeury(),
 				new RowMapper<Integer>() {
 					@Override
 					public Integer mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 						return resultSet.getInt("quantity");
 					}
 				}, productID, storeName);
-
 	}
 
-	public void update(String productID, int quantity, String storeName, boolean option) { // false (-) true (+)
-		if (option) { // (+)
-			jdbcTemplate.update("UPDATE inventory SET " + "quantity = ? " + "WHERE productid = ?",
-					getQuantityByProductId(productID, storeName) + quantity, productID);
+	public void update(Long productID, int quantity, String storeName, boolean OperationIsPlus) { // false (-) true (+)
+		if (OperationIsPlus) { // (+)
+
+			setSqlQeury("UPDATE inventory SET " + "quantity = ? " + "WHERE productid = ?");
+
+			jdbcTemplate.update(getSqlQeury(),
+					getQuantityByProductId(productID, storeName) + quantity
+					, productID);
 		} else { // (-)
-			jdbcTemplate.update("UPDATE inventory SET " + "quantity = ? " + "WHERE productid = ?",
-					getQuantityByProductId(productID, storeName) - quantity, productID);
+
+			setSqlQeury("UPDATE inventory SET " + "quantity = ? " + "WHERE productid = ?");
+
+			jdbcTemplate.update(getSqlQeury(),
+					getQuantityByProductId(productID, storeName) - quantity
+					, productID);
 		}
 	}
 
-	public void insert(String productID, int quantity, String storeName) {
-		String sql = "INSERT INTO inventory (productid, quantity, storename) VALUES (?, ?, ?)";
-		jdbcTemplate.update(sql, productID, quantity, storeName);
+	//관리자 상품 추가.
+	public void insert(Long productID, int quantity, String storeName) {
+		setSqlQeury("INSERT INTO inventory (productid, quantity, storename) VALUES (?, ?, ?)");
+		jdbcTemplate.update(getSqlQeury(),
+				productID,
+				quantity,
+				storeName);
 	}
 }

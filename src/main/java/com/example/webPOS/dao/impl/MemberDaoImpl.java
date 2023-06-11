@@ -23,7 +23,7 @@ public class MemberDaoImpl implements MemberDAO {
 
     //db 접속해서 loginCheck 하는 기능입니다.
     @Override
-    public String loginCheck(Member dto) {
+    public String loginCheck(Member member) {
         String query = "SELECT * FROM member WHERE email = ? AND password = ?";
         try {
             List<Member> members = jdbcTemplate.query(query,
@@ -33,9 +33,8 @@ public class MemberDaoImpl implements MemberDAO {
                             rs.getString("role"),
                             rs.getTimestamp("datetime").toLocalDateTime()
                     ),
-                    dto.getEmail(),
-                    dto.getPassword());
-
+                    member.getEmail(),
+                    member.getPassword());
             if (!members.isEmpty()) {
                 // 로그인 성공하면 success 리턴
                 return "success";

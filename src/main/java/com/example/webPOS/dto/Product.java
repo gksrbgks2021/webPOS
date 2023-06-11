@@ -1,25 +1,24 @@
 package com.example.webPOS.dto;
 
 public class Product {
-    private String productId;
+    private long productId;
     private long netPrice;
     private long costPrice;
     private String name;
 
     Product() {}
 
-    Product(String productId, long netPrice, long costPrice, String name) {
-        this.productId = productId;
+    public Product(long netPrice, long costPrice, String name) {
         this.netPrice = netPrice;
         this.costPrice = costPrice;
         this.name = name;
     }
 
-    public String getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 

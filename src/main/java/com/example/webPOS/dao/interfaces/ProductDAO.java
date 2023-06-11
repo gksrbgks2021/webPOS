@@ -4,7 +4,8 @@ import com.example.webPOS.dto.Product;
 
 import java.util.List;
 
-public interface productDAO {
+public interface ProductDAO {
     List<Product> findAll();
-    boolean save(Product product);
+    void save(Product product);
+    Product findById(Long ProductID);
 }

@@ -1,9 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ page import="com.example.webPOS.dto.Member" %>
 <%@ page import="com.example.webPOS.constants.SessionConstants" %>
+<%@ page import="com.example.webPOS.constants.UrlParamAction" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-
 <%
     Member sessionMember = (Member) session.getAttribute(SessionConstants.LOGIN_MEMBER);
     String sessionName = sessionMember.getName();
@@ -22,29 +23,41 @@
 <body>
 <h2>
 
-    <li style="padding-top: 7px;"><strong>[${name}님] 환영합니다.</strong></li><br/>
+    <li style="padding-top: 7px;"><strong>[${name}님] 환영합니다.</strong></li>
+    <br/>
 
-    <div>
-        <li class="nav-item"><a href="/logout" class="nav-link">로그 아웃</a></li>
-        <c:choose>
-            <c:when test="${role eq 'staff'}">
-                <li class="nav-item"><a class="nav-link" href="/sale">상품 판매</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">통계</a></li>
-            </c:when>
-            <c:when test="${role eq 'manager'}">
-                <li class="nav-item"><a class="nav-link" href="#">로그 아웃</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">상품 판매</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">상품 발주</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">통계</a></li>
-            </c:when>
-            <c:when test="${role eq 'admin'}">
-                <li class="nav-item"><a class="nav-link" href="#">로그 아웃</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">회원 수정</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">상품 등록</a></li>
-            </c:when>
-        </c:choose>
-    </div>
-
+    <li><a href="/logout" class="nav-link">
+        <button type="submit">로그 아웃</button>
+    </a></li>
+    <c:choose>
+    <c:when test="${role eq 'staff'}">
+    <li><a href="/trade?selectedAction=<%=UrlParamAction.ORDER%>" class="nav-link">
+        <button type="submit">상품 판매</button>
+    </a></li>
+    <li><a href="/statistic" class="nav-link">
+        <button type="submit">통계</button>
+    </a></li>
+    </c:when>
+    <c:when test="${role eq 'manager'}">
+    <li><a href="/trade?selectedAction=<%=UrlParamAction.SALE%>" class="nav-link">
+        <button type="submit">상품 판매</button>
+    </a></li>
+    <li><a href="/trade?selectedAction=<%=UrlParamAction.ORDER%>" class="nav-link">
+        <button type="submit">상품 발주</button>
+    </a></li>
+    <li><a href="#" class="nav-link">
+        <button type="submit">통계</button>
+    </a></li>
+    </c:when>
+    <c:when test="${role eq 'admin'}">
+    <li><a href="/admin?selectedAction=<%=UrlParamAction.MANAGE_MEMBER%>" class="nav-link">
+        <button type="submit">회원 수정</button>
+    </a></li>
+    <li><a href="/admin?selectedAction=<%=UrlParamAction.MANAGE_PRODUCT%>" class="nav-link">
+        <button type="submit">상품 등록</button>
+    </a></li>
+    </c:when>
+    </c:choose>
 </body>
 
 </html>

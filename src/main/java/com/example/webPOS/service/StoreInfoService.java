@@ -17,7 +17,6 @@ public class StoreInfoService {
         this.storeInfoDAO = storeInfoDAO;
     }
 
-
     public List<StoreInfo> findAllStore(){
         return storeInfoDAO.findAll();
     }

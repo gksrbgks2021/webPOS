@@ -25,8 +25,8 @@ public class StoreInfoDaoImpl implements StoreInfoDAO {
         List<StoreInfo> results = jdbcTemplate.query("select * from STOREINFO",
                 (ResultSet rs, int rowNum) -> {
                     StoreInfo storeInfo = new StoreInfo(
-                            rs.getString("storename"),
-                            rs.getString("managername"));
+                            rs.getString("managername"),
+                            rs.getString("storename"));
                     return storeInfo;
                 });
         return results;

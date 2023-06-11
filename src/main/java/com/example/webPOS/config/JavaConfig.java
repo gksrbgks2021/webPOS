@@ -1,20 +1,21 @@
 package com.example.webPOS.config;
 
-import com.example.webPOS.dao.impl.InventoryDaoImpl;
-import com.example.webPOS.dao.impl.StoreInfoDaoImpl;
-import com.example.webPOS.dao.interfaces.InventoryDAO;
-import com.example.webPOS.dao.interfaces.MemberDAO;
-import com.example.webPOS.dao.impl.MemberDaoImpl;
-import com.example.webPOS.dao.interfaces.StoreInfoDAO;
+import com.example.webPOS.dao.impl.*;
+import com.example.webPOS.dao.interfaces.*;
 import com.example.webPOS.dto.Inventory;
 import com.example.webPOS.service.MemberRegisterService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @ComponentScan(basePackages = "com.example.webPOS")
+@EnableWebMvc
 public class JavaConfig {
 
     /**
@@ -38,6 +39,15 @@ public class JavaConfig {
         ds.setTimeBetweenEvictionRunsMillis(10 * 1000);
         return ds;
     }
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class); //jstlView mapping
+        viewResolver.setPrefix("/WEB-INF/views/");  // Set your view prefix here
+        viewResolver.setSuffix(".jsp");  // Set your view suffix here
+        return viewResolver;
+    }
+
 
     /**
      * 멤버관련 빈 등록
@@ -70,5 +80,17 @@ public class JavaConfig {
     }
 
 
+    /**
+     * product 관련 빈 드등록
+     */
+
+    @Bean
+    public ProductDAO productDAO(DataSource dataSource){return new ProductDaoImpl(dataSource);}
+
+    /**
+     * TradeLog 빈 등록
+     */
+    @Bean
+    public TradeLogDAO tradeLogDAO(DataSource dataSource){return new TradeLogDaoImpl(dataSource);}
 
 }

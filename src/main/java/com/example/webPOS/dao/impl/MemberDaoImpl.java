@@ -118,4 +118,10 @@ public class MemberDaoImpl implements MemberDAO {
         }, id);
         return results.isEmpty() ? null : results.get(0);
     }
+
+    @Override
+    public int delete(Member member){
+        String sql = "delete * from member where ID = ?";
+        return jdbcTemplate.update(sql, member.getId());
+    }
 }

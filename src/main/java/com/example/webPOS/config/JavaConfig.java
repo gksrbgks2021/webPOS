@@ -1,7 +1,10 @@
 package com.example.webPOS.config;
 
+import com.example.webPOS.dao.impl.InventoryDaoImpl;
+import com.example.webPOS.dao.interfaces.InventoryDAO;
 import com.example.webPOS.dao.interfaces.MemberDAO;
 import com.example.webPOS.dao.impl.MemberDaoImpl;
+import com.example.webPOS.dto.Inventory;
 import com.example.webPOS.service.MemberRegisterService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +46,21 @@ public class JavaConfig {
         return new MemberDaoImpl(dataSource);
     }
 
-
     @Bean
     public MemberRegisterService memberRegisterService(MemberDAO memberDAO){
         return new MemberRegisterService(memberDAO);
     }
+
+    /**
+     *
+     * 인벤토리 관련 빈 등록
+     */
+
+    @Bean
+    public InventoryDAO inventoryDAO(DataSource dataSource){
+        return new InventoryDaoImpl(dataSource);
+    }
+
+
 
 }

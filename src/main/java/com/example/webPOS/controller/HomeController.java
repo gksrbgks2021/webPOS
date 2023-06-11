@@ -17,6 +17,7 @@ public class HomeController {
 
         if(member != null){
             model.addAttribute("name",member.getName());
+            model.addAttribute("role", member.getRole());
 
             return "home/main";
         }else{

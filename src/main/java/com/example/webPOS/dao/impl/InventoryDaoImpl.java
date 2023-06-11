@@ -21,11 +21,19 @@ public class InventoryDaoImpl implements InventoryDAO {
 	
 	@Override
 	public List<Inventory> findAll(String storeName) {
-		List<Inventory> results = jdbcTemplate.query("select * from INVENTORY WHERE storename = ?", (ResultSet rs, int rowNum) -> {
-			Inventory inventory = new Inventory(rs.getString("PRODUCT_ID"), rs.getInt("quantity"), rs.getString("storename"));
+		List<Inventory> results = jdbcTemplate.query("select * from INVENTORY WHERE storename = ?",
+				(ResultSet rs, int rowNum) -> {
+			Inventory inventory = new Inventory(rs.getString("productid"),
+					rs.getInt("quantity"),
+					rs.getString("storename"));
 			return inventory;
 		}, storeName);
 		return results;
+	}
+
+	@Override
+	public void update(Inventory inventory) {
+
 	}
 
 }

@@ -31,4 +31,12 @@ public class MemberRegisterService {
         memberDao.save(newMember);
         return newMember.getId();
     }
+    // 회원 삭제
+    public int deleteByEmail(String email) throws Exception {
+        Member member = memberDao.findByEmail(email);
+        if (member == null) {
+            throw new Exception("MemberNotFoundException");
+        }
+        return memberDao.delete(member);
+    }
 }

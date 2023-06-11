@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class productDaoImpl implements productDAO {
 
@@ -17,6 +18,11 @@ public class productDaoImpl implements productDAO {
 
     @Autowired
     productDaoImpl(JdbcTemplate jdbcTemplate){this.jdbcTemplate = jdbcTemplate;}
+
+    @Override
+    public List<Product> findAll() {
+        return null;
+    }
 
     @Override
     public boolean save(Product product) {

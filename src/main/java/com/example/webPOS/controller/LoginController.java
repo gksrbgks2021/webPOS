@@ -34,6 +34,7 @@ public class LoginController {
     public String login(Model model){
 
         return "login/login";
+        //return "test";
     }
 
     @PostMapping("/login")

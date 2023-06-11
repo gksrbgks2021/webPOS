@@ -23,8 +23,10 @@ class MemberDaoImplTest {
         assertEquals(rs.getEmail(), email);//요청한 이메일과 받아온 이메일이 동일한지 확인
         System.out.println(rs.getEmail());
     }
+
     @Test
     void 회원가입테스트() {
+
         Member member = new Member(
                 "password123",
                 "John Doe",

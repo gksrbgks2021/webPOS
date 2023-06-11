@@ -1,7 +1,13 @@
 <%@ page import="com.example.webPOS.dto.Member" %>
+<%@ page import="com.example.webPOS.constants.SessionConstants" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+
+<%
+    Member sessionMember = (Member) session.getAttribute(SessionConstants.LOGIN_MEMBER);
+    String sessionName = sessionMember.getName();
+%>
 
 <!DOCTYPE html>
     <html>
@@ -13,13 +19,16 @@
         <title>메인화면</title>
     </head>
 
-    <body>
-        <h2><strong>
-            ${name}
-            님</strong> 환영합니다!</h2>
-
-
-        <a href="/logout" class="btn btn-primary">로그아웃</a>
+    <body>S
+        <h2>
+            <li style="padding-top: 7px;"><strong>[${name}님] 환영합니다.</strong>
+        </li>
+        <li class="nav-item"><a href="/logout" class="nav-link" >로그 아웃</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">회원 수정</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">상품 판매</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">상품 발주</a></li>
+        <li class="nav-item"><a class="nav-link"
+                                href="#">통계</a></li>
 
     </body>
 

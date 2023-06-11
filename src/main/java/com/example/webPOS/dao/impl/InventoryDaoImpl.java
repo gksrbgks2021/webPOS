@@ -53,7 +53,7 @@ public class InventoryDaoImpl implements InventoryDAO {
 	}
 
 	public void insert(String productID, int quantity, String storeName) {
-		String sql = "INSERT INTO inventory (productID, quantity, storename) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO inventory (productid, quantity, storename) VALUES (?, ?, ?)";
 		jdbcTemplate.update(sql, productID, quantity, storeName);
 	}
 }

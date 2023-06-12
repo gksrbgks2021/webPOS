@@ -43,7 +43,7 @@ public class InventoryDaoImpl implements InventoryDAO {
 				}, storeName);
 		return results;
 	}
-
+	@Override
 	public int getQuantityByProductId(Long productID, String storeName) {
 		System.out.println(productID + " " + storeName);
 		setSqlQeury("SELECT quantity FROM inventory WHERE productid = ? AND storename = ?");
@@ -53,10 +53,11 @@ public class InventoryDaoImpl implements InventoryDAO {
 					public Integer mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 						return resultSet.getInt("quantity");
 					}
-				}, productID, storeName) ;
+				}, productID, storeName);
 		return res != null ? res.intValue() : 0;
 	}
 
+	@Override
 	public void update(Long productID, int quantity, String storeName, boolean OperationIsPlus) { // false (-) true (+)
 		if (OperationIsPlus) { // (+)
 
@@ -84,6 +85,7 @@ public class InventoryDaoImpl implements InventoryDAO {
 		return res;
 	}
 
+	@Override
 	//관리자 상품 추가.
 	public void insert(Long productID, int quantity, String storeName) {
 		setSqlQeury("INSERT INTO inventory (productid, quantity, storename) VALUES (?, ?, ?)");

@@ -21,4 +21,8 @@ public class StoreInfoService {
         return storeInfoDAO.findAll();
     }
 
+    public List<StoreInfo> findByManagerName(String e){
+        return storeInfoDAO.findByEmail(e);
+    }
+
 }

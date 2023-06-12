@@ -47,6 +47,7 @@ public class HomeController {
 
     @GetMapping("/trade/actionName/{action}")
     public String handeTrade(@PathVariable("action") String action,
+                             @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member,
                              HttpServletRequest request,
                              Model model) {
 
@@ -56,15 +57,17 @@ public class HomeController {
         model.addAttribute(attributeName, action);
 
         if (action.equals(UrlParamAction.SALE)) {
-            sb.append("home/trade/selectStore");
 
+            sb.append("home/trade/selectStore");
             model.addAttribute("storeList", storeInfoService.findAllStore());
             return sb.toString();
+
         } else if (action.equals(UrlParamAction.ORDER)) {
-            sb.append("home/trade/selectStore");
 
-            model.addAttribute("storeList", storeInfoService.findAllStore());
+            sb.append("home/trade/selectStore");
+            model.addAttribute("storeList", storeInfoService.findByManagerName(member.getEmail()));
             return sb.toString();
+
         }
         return "redirect:/home";
     }

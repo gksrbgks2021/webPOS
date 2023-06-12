@@ -31,5 +31,16 @@ public class StoreInfoDaoImpl implements StoreInfoDAO {
                 });
         return results;
     }
+    @Override
+    public List<StoreInfo> findByEmail(String email) {
+        List<StoreInfo> results = jdbcTemplate.query("select * from STOREINFO where managername = ?",
+                (ResultSet rs, int rowNum) -> {
+                    StoreInfo storeInfo = new StoreInfo(
+                            rs.getString("managername"),
+                            rs.getString("storename"));
+                    return storeInfo;
+                },email);
+        return results;
+    }
 
 }

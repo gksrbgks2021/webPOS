@@ -13,6 +13,8 @@
 <body>
 <h1>편의점 지점 선택</h1>
 
+<p>거래할 편의점을 선택해주세요</p><br/>
+
 <div style="width:500px;">
     <c:choose>
         <c:when test="${storeList == null}">

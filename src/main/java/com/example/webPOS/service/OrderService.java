@@ -61,15 +61,14 @@ public class OrderService implements TradeService {
     public void order(List<TradeLog> tradeLog) {
         for (TradeLog trade : tradeLog) {
             //given
-            String productName = productDAO.findById(trade.getProductId()).getName();
-            int NumOfProduct = inventoryDAO.getQuantityByProductId(trade.getProductId(), trade.getStoreName());
-            int NumOfrequest = trade.getQuantityTraded();
+            //String productName = productDAO.findById(trade.getProductId()).getName();
+            int numOfRequest = trade.getQuantityTraded();
 
             tradeLogDAO.save(trade);
-            if (NumOfProduct == 0) {
-                inventoryDAO.insert(trade.getProductId(), NumOfrequest, trade.getStoreName());
+            if (inventoryDAO.existProduct(trade.getProductId(), trade.getStoreName())) {
+                inventoryDAO.update(trade.getProductId(), numOfRequest, trade.getStoreName(), true);
             } else {
-                inventoryDAO.update(trade.getProductId(), NumOfrequest, trade.getStoreName(), true);
+                inventoryDAO.insert(trade.getProductId(), numOfRequest, trade.getStoreName());
             }
         }
     }

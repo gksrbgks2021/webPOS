@@ -8,4 +8,6 @@ public interface ProductDAO {
     List<Product> findAll();
     void save(Product product);
     Product findById(Long ProductID);
+
+    Product findByName(String name);
 }

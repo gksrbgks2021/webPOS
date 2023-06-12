@@ -6,7 +6,7 @@ public class Product {
     private long costPrice;
     private String name;
 
-    Product() {}
+    public Product() {}
 
     public Product(long netPrice, long costPrice, String name) {
         this.netPrice = netPrice;

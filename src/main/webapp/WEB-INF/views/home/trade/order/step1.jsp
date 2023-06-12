@@ -11,10 +11,9 @@
 <script>
     let orderItems = []; // 선택한 상품 정보를 저장할 배열
 
-    // 선택한 상품을 테이블에 추가하거나 개수를 증가시키는 함수
     function addProduct(name, netPrice) {
-        let table = document.getElementById("orderTable");
-        let rows = table.rows;
+        let table = document.getElementById("orderTable");//테이블을 가져온다.
+        let rows = table.rows;//태이블 행 을 가져온다.
 
         // 이미 선택한 상품인지 확인
         let isExist = false;
@@ -36,9 +35,9 @@
                 // 주문할 가격 업데이트
                 let priceCell = row.cells[2];
                 let price = parseInt(priceCell.innerHTML);
-                priceCell.innerHTML = price + netPrice;
+                priceCell.innerHTML = (quantity + 1) * netPrice; // 수정된 부분
 
-                updateTotalPrice(); // 총 가격 업데이트
+                updateTotalPrice();
 
                 return;
             }
@@ -49,13 +48,17 @@
         let nameCell = row.insertCell(0);
         let quantityCell = row.insertCell(1);
         let priceCell = row.insertCell(2);
+        let deleteCell = row.insertCell(3); // 삭제 버튼을 위한 셀 추가
         nameCell.innerHTML = name;
         quantityCell.innerHTML = "<input type='number' name='quantity' min='1' value='1' onchange='updateTotalPrice()'>";
         priceCell.innerHTML = netPrice;
+        // 삭제 버튼 추가
+        deleteCell.innerHTML = "<button onclick='deleteRow(this, \"" + name + "\")'>X</button>";
 
         updateTotalPrice(); // 총 가격 업데이트
 
         // 선택한 상품 정보를 배열에 추가
+        //서버로 보낼 정보들이다.
         orderItems.push({
             name: name,
             netPrice: netPrice,
@@ -63,7 +66,10 @@
         });
     }
 
-    // 총 가격을 계산하고 보여주는 함수
+    function getTotalPrice(){
+        return document.getElementById("totalPrice").innerText.replace('+','');
+    }
+
     function updateTotalPrice() {
         let table = document.getElementById("orderTable");
         let rows = table.rows;
@@ -73,9 +79,8 @@
         for (let i = 1; i < rows.length; i++) {
             let row = rows[i];
             let quantityInput = row.cells[1].querySelector("input[type='number']");
-            let quantity = parseInt(quantityInput.value);
             let price = parseInt(row.cells[2].innerHTML); // 주문할 가격
-            totalPrice += quantity * price;
+            totalPrice += price;
         }
 
         let totalPriceElement = document.getElementById("totalPrice");
@@ -92,9 +97,10 @@
         // 주문 정보를 폼으로 생성
         let form = document.createElement("form");
         form.method = "post";
-        form.action = "/order/submit";
+        form.action = "/order/${storeName}/+"+getTotalPrice()+"/submit";
 
         // 상품 정보를 폼에 추가
+        //<input tag> 생성해서 리퀘스트 추가합니다.
         for (let i = 0; i < orderItems.length; i++) {
             let orderItem = orderItems[i];
 
@@ -109,11 +115,34 @@
             quantityInput.name = "quantity" + i;
             quantityInput.value = orderItem.quantity;
             form.appendChild(quantityInput);
+
+            let priceInput = document.createElement("input");
+            priceInput.type = "hidden";
+            priceInput.name = "price" + i;
+            priceInput.value = orderItem.netPrice * orderItem.quantity;;
+            form.appendChild(priceInput);
         }
 
         // 폼을 현재 페이지에 추가하고 전송
         document.body.appendChild(form);
         form.submit();
+    }
+
+    function deleteRow(btn, name) {
+        // 테이블에서 행 삭제
+        let row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+
+        // orderItems 배열에서 해당 항목 삭제
+        for (let i = 0; i < orderItems.length; i++) {
+            if (orderItems[i].name === name) {
+                orderItems.splice(i, 1);
+                break;
+            }
+        }
+
+        // 총 가격 업데이트
+        updateTotalPrice();
     }
 
 </script>
@@ -139,12 +168,12 @@
     </c:choose>
 
     <br/>
-    <form id="orderForm" method="post" action="/order/submit">
         <table id="orderTable">
             <tr>
                 <th>상품 이름</th>
                 <th>상품 개수</th>
-                <th>주문할 가격</th>
+                <th>총 가격</th>
+                <th>삭제</th>
             </tr>
         </table>
         <br/>
@@ -152,7 +181,6 @@
         <p>총 가격: <span id="totalPrice">0</span></p>
         <br/>
         <button type="button" onclick="submitOrder()">주문하기</button>
-    </form>
 </div>
 
 </body>

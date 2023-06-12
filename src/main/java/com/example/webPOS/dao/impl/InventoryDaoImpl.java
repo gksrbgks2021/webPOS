@@ -45,6 +45,7 @@ public class InventoryDaoImpl implements InventoryDAO {
 	}
 
 	public int getQuantityByProductId(Long productID, String storeName) {
+		System.out.println(productID + " " + storeName);
 		setSqlQeury("SELECT quantity FROM inventory WHERE productid = ? AND storename = ?");
 		Integer res=  jdbcTemplate.queryForObject(getSqlQeury(),
 				new RowMapper<Integer>() {
@@ -72,6 +73,15 @@ public class InventoryDaoImpl implements InventoryDAO {
 					getQuantityByProductId(productID, storeName) - quantity
 					, productID);
 		}
+	}
+
+	@Override
+	public boolean existProduct(Long productID, String storeName) {
+		System.out.println(productID + " " + storeName);
+		setSqlQeury("SELECT exists ( select quantity FROM inventory WHERE productid = ? AND storename = ?)");
+		Boolean res =  jdbcTemplate.queryForObject(getSqlQeury(),
+				Boolean.class, productID, storeName);
+		return res;
 	}
 
 	//관리자 상품 추가.

@@ -11,5 +11,6 @@ public interface InventoryDAO {
 
 	void update(Long productID, int quantity, String storeName, boolean IsOperationSum); // false (-) true (+)
 
+	boolean existProduct(Long productID, String storeName);
 	void insert(Long productID, int quantity, String storeName);
 }

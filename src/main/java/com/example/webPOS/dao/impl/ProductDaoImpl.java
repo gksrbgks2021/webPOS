@@ -79,4 +79,20 @@ public class ProductDaoImpl implements ProductDAO {
         }, ProductID);
         return results.isEmpty() ? null : results.get(0);
     }
+    @Override
+    public Product findByName(String name) {
+        setSqlQuery("SELECT * FROM PRODUCT WHERE NAME = ?");
+        List<Product> results = jdbcTemplate.query(getSqlQuery(), new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Product product = new Product(
+                        rs.getLong("netprice"),
+                        rs.getLong("costprice"),
+                        rs.getString("name"));
+                product.setProductId(rs.getLong("productId"));
+                return product;
+            }
+        }, name);
+        return results.isEmpty() ? null : results.get(0);
+    }
 }

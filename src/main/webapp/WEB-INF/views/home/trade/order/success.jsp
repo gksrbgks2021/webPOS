@@ -19,7 +19,8 @@
 
 <h2>[주문 완료 페이지]</h2>
 
-<p><%=member.getName()%>님 주문이 완료되었습니다 ! </p><br>
+<p><%=member.getName()%>님 주문이 완료되었습니다 ! </p><br/>
+<p>주문하신 금액은 총 ${totalPrice} 원 입니다 </p><br/>
 
 <form action="/finish" method="get">
     <button type="submit">메인 화면으로 돌아가기</button>

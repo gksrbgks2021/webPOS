@@ -12,22 +12,70 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+import javax.sql.DataSource;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
-class productDaoImplTest {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+class ProductDaoImplTest {
 
     @Autowired
     private ProductDAO productDAO;
 
-    @Test
-    void findAll() {
-        //List<Product>
+    private Product product;
+
+    @BeforeEach
+    public void setup() {
+        product = new Product();
+        product.setNetPrice(100L);
+        product.setCostPrice(50L);
+        product.setName("Test Product");
     }
 
     @Test
-    void save() {
+    public void testSaveAndFindById() {
+        // Save the product
+        productDAO.save(product);
+        // Fetch the product
+        Product fetchedProduct = productDAO.findById(product.getProductId());
+
+        // Check the product details
+        assertNotNull(fetchedProduct);
+        assertEquals(product.getName(), fetchedProduct.getName());
+        assertEquals(product.getNetPrice(), fetchedProduct.getNetPrice());
+        assertEquals(product.getCostPrice(), fetchedProduct.getCostPrice());
+    }
+
+    @Test
+    public void testFindAll() {
+        // Save the product
+        productDAO.save(product);
+
+        // Fetch all products
+        List<Product> products = productDAO.findAll();
+
+        // Check the products
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+    }
+
+    @AfterEach
+    public void cleanup() {
+        // Clean up the database after each test
     }
 }

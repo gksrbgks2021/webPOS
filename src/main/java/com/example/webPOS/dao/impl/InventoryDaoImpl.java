@@ -46,13 +46,14 @@ public class InventoryDaoImpl implements InventoryDAO {
 
 	public int getQuantityByProductId(Long productID, String storeName) {
 		setSqlQeury("SELECT quantity FROM inventory WHERE productid = ? AND storename = ?");
-		return jdbcTemplate.queryForObject(getSqlQeury(),
+		Integer res=  jdbcTemplate.queryForObject(getSqlQeury(),
 				new RowMapper<Integer>() {
 					@Override
 					public Integer mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 						return resultSet.getInt("quantity");
 					}
-				}, productID, storeName);
+				}, productID, storeName) ;
+		return res != null ? res.intValue() : 0;
 	}
 
 	public void update(Long productID, int quantity, String storeName, boolean OperationIsPlus) { // false (-) true (+)

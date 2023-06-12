@@ -1,6 +1,7 @@
 package com.example.webPOS.dao.impl;
 
 import com.example.webPOS.dao.interfaces.TradeLogDAO;
+import com.example.webPOS.dto.Product;
 import com.example.webPOS.vo.TradeLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +34,7 @@ public class TradeLogDaoImpl implements TradeLogDAO {
 
     @Override
     public void save(TradeLog tradeLog) {
-        setSqlQuery("INSERT INTO trade_log (productId, tradeDate, QUANTITYTRADED, TOTALPRICE, STATE, STORENAME)VALUES (?, ?, ?, ?, ?, ?)");
+        setSqlQuery("INSERT INTO tradelog (productId, tradeDate, QUANTITYTRADED, TOTALPRICE, STATE, STORENAME)VALUES (?, ?, ?, ?, ?, ?)");
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -63,6 +64,29 @@ public class TradeLogDaoImpl implements TradeLogDAO {
     public List<TradeLog> findPeriodDesc(String start, String end, String dateType) {
         //구현!
         return null;
+    }
+
+    @Override
+    public TradeLog findById(Long productID) {
+        setSqlQuery("SELECT * FROM TRADELOG  WHERE ProductID = ?");
+
+        List<TradeLog> results = jdbcTemplate.query(getSqlQuery(), new RowMapper<TradeLog>() {
+            @Override
+            public TradeLog mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                TradeLog tradeLog = new TradeLog();
+                tradeLog.setId(rs.getInt("id"));
+                tradeLog.setProductId(rs.getLong("productId"));
+                tradeLog.setTradeDate(rs.getTimestamp("tradeDate").toLocalDateTime());
+                tradeLog.setQuantityTraded(rs.getInt("quantityTraded"));
+                tradeLog.setTotalPrice(rs.getLong("totalPrice"));
+                tradeLog.setState(rs.getString("state"));
+                tradeLog.setStoreName(rs.getString("storeName"));
+
+                return tradeLog;
+            }
+        }, productID);
+        return results.isEmpty() ? null : results.get(0);
     }
 
 }

@@ -16,9 +16,17 @@ class StoreInfoServiceTest {
     @Autowired
     StoreInfoDAO storeInfoDAO;
 
+    @Autowired
+    StoreInfoService storeInfoService;
+
     @Test
     void findAllStore() {
         List<StoreInfo> l = storeInfoDAO.findAll();
         System.out.println(l.size());
+    }
+
+    @Test
+    void 서비스테스트(){
+        System.out.println(storeInfoService.findAllStore().size());
     }
 }

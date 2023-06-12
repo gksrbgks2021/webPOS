@@ -12,6 +12,7 @@ public class TradeLog {
     private String state;
     private String storeName;
 
+    public TradeLog(){}
     public int getId() {
         return id;
     }

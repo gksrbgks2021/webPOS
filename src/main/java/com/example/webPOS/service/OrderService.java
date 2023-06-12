@@ -4,11 +4,14 @@ import com.example.webPOS.dao.interfaces.InventoryDAO;
 import com.example.webPOS.dao.interfaces.ProductDAO;
 import com.example.webPOS.dao.interfaces.TradeLogDAO;
 import com.example.webPOS.dto.Inventory;
+import com.example.webPOS.dto.Product;
 import com.example.webPOS.vo.TradeLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderService implements TradeService {
     TradeLogDAO tradeLogDAO;
     InventoryDAO inventoryDAO;
@@ -17,7 +20,6 @@ public class OrderService implements TradeService {
     public TradeLogDAO getTradeLogDAO() {
         return tradeLogDAO;
     }
-
 
     @Autowired
     public void setTradeLogDAO(TradeLogDAO tradeLogDAO) {
@@ -53,10 +55,22 @@ public class OrderService implements TradeService {
         return inventoryDAO.findAll(storeName);
     }
 
-    public void order(List<TradeLog> tradeLog){
-        for (TradeLog trade : tradeLog) {
-            String productName = productDAO.findById(trade.getProductId()).getName();
+    @Override
+    public List<Product> showProduct() {  return productDAO.findAll();}
 
+    public void order(List<TradeLog> tradeLog) {
+        for (TradeLog trade : tradeLog) {
+            //given
+            String productName = productDAO.findById(trade.getProductId()).getName();
+            int NumOfProduct = inventoryDAO.getQuantityByProductId(trade.getProductId(), trade.getStoreName());
+            int NumOfrequest = trade.getQuantityTraded();
+
+            tradeLogDAO.save(trade);
+            if (NumOfProduct == 0) {
+                inventoryDAO.insert(trade.getProductId(), NumOfrequest, trade.getStoreName());
+            } else {
+                inventoryDAO.update(trade.getProductId(), NumOfrequest, trade.getStoreName(), true);
+            }
         }
     }
 }

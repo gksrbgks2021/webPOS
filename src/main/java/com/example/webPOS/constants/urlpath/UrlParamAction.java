@@ -1,4 +1,4 @@
-package com.example.webPOS.constants;
+package com.example.webPOS.constants.urlpath;
 
 public interface UrlParamAction {
     String ORDER = "order";

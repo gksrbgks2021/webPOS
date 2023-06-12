@@ -30,7 +30,6 @@ public class LoginController {
 
     @RequestMapping("/")
     public String login(Model model){
-
         return "login/login";
         //return "test";
     }
@@ -43,12 +42,10 @@ public class LoginController {
         String id = request.getParameter("id");
         String pw = request.getParameter("password");
 
-        System.out.println(id + " " + pw);
-
         Member loginMember = loginService.login(id, pw);
 
         if (loginMember == null) {
-            System.out.println("아이디 또는 비밀번호가 맞지 않습니다.");
+            log.info("아이디 또는 비밀번호가 맞지 않습니다.");
             return "login/login";
         }
 
@@ -61,7 +58,11 @@ public class LoginController {
 
     @GetMapping("/logout")      //세션날림
     public String logout(HttpServletRequest request) {
-        request.getSession().removeAttribute(SessionConstants.LOGIN_MEMBER);
+
+        HttpSession session = request.getSession();
+
+        session.removeAttribute(SessionConstants.LOGIN_MEMBER);
+        session.invalidate();
 
         return "redirect:/";
     }

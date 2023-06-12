@@ -48,7 +48,6 @@ public class JavaConfig {
         return viewResolver;
     }
 
-
     /**
      * 멤버관련 빈 등록
      */

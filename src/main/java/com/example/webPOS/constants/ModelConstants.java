@@ -7,13 +7,14 @@ package com.example.webPOS.constants;
  */
 public interface ModelConstants {
 
-    String LOGIN_FORM = "loginForm";
-    String REGISTER_FORM = "registerForm";
+    String LOGIN_FORM = "LOGINFORM";
+    String REGISTER_FORM = "REGISTERFORM";
     String MAPPING_TRADE_URL = "mappingTrade";
     String MAPPING_ADMIN_URL = "mappingAdmin";
-    String SELECTED_ACTION = "sAction";
-    String INVENTORY_LIST = "inventoryList";
-    String STORE_LIST = "storeList";
-    String STORE_NAME = "storeName";
+    String SELECTED_ACTION = "SACTION";
+    String INVENTORY_LIST = "INVENTORYLIST";
+    String STORE_LIST = "STORELIST";
+    String STORE_NAME = "STORENAME";
+    String PRODUCT_LIST = "PRODUCTLIST";
 
 }

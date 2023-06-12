@@ -63,10 +63,9 @@ public class ProductDaoImpl implements ProductDAO {
         Number keyValue = keyHolder.getKey();
         product.setProductId(keyValue.longValue());//productId 삽입
     }
-
     @Override
     public Product findById(Long ProductID) {
-        setSqlQuery("SELECT * FROM PRODUCT WHERER ProductID = ?");
+        setSqlQuery("SELECT * FROM PRODUCT WHERE ProductID = ?");
         List<Product> results = jdbcTemplate.query(getSqlQuery(), new RowMapper<Product>() {
             @Override
             public Product mapRow(ResultSet rs, int rowNum) throws SQLException {

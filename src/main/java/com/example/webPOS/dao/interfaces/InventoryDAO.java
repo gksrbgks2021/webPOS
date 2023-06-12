@@ -9,7 +9,7 @@ public interface InventoryDAO {
 
 	int getQuantityByProductId(Long productID, String storeName);
 
-	void update(Long productID, int quantity, String storeName, boolean option); // false (-) true (+)
+	void update(Long productID, int quantity, String storeName, boolean IsOperationSum); // false (-) true (+)
 
 	void insert(Long productID, int quantity, String storeName);
 }

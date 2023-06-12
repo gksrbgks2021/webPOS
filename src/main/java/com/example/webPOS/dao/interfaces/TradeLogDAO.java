@@ -8,4 +8,6 @@ public interface TradeLogDAO {
     void save(TradeLog tradeLog);
     List<TradeLog> findPeriod(String start, String end, String StoreName);
     List<TradeLog> findPeriodDesc(String start, String end, String dateType);//기간 조회
+
+    TradeLog findById(Long productID);
 }

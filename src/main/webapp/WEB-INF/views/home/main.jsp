@@ -24,6 +24,8 @@
 <h2>
 
     <li style="padding-top: 7px;"><strong>[${name}님] 환영합니다.</strong></li>
+    <&nbsp><&nbsp><&nbsp>[${role}] 로 로그인 중
+    <br>
     <br/>
 
     <li><a href="/logout" class="nav-link">

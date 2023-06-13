@@ -97,7 +97,7 @@ public class HomeController {
         model.addAttribute("name", member.getName());
         model.addAttribute("role", member.getRole());
 
-        return "redirect:home/main";
+        return "redirect:/home";
     }
 
     @GetMapping("/statistic")

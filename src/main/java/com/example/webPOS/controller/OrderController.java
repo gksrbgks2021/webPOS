@@ -76,14 +76,13 @@ public class OrderController {
 
                     tradeLogList.add(tradeLog);
                 }
-
-                if (paramName.startsWith("name")) {
-                    System.out.println("Name: " + paramValue);
-                } else if (paramName.startsWith("quantity")) {
-                    System.out.println("Quantity: " + paramValue);
-                } else if (paramName.startsWith("price")) {
-                    System.out.println("Price: " + paramValue);
-                }
+//                if (paramName.startsWith("name")) {
+//                    System.out.println("Name: " + paramValue);
+//                } else if (paramName.startsWith("quantity")) {
+//                    System.out.println("Quantity: " + paramValue);
+//                } else if (paramName.startsWith("price")) {
+//                    System.out.println("Price: " + paramValue);
+//                }
             }
         }
 

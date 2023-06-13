@@ -40,28 +40,28 @@ public class RequestLoggingAspect {
 
     //조인포인트는, 컨트롤러 마다 다르게 설정해야함.
 
-//    @Around("com.example.webPOS.aop.RequestLoggingAspect.onRequest()") // 4
-//    public Object doLogging(ProceedingJoinPoint joinPoint) throws Throwable {
-//        HttpServletRequest request = // 5
-//                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-//
-//        Map<String, String[]> paramMap = request.getParameterMap();
-//        String params = paramMap.isEmpty() ? "" : " [" + paramMapToString(paramMap) + "]";
-//
-//        Object result = null;
-//        long start = System.currentTimeMillis();
-//        try {
-//            result = joinPoint.proceed(joinPoint.getArgs()); // 6
-//            return result;
-//        } finally {
-//
-//            long end = System.currentTimeMillis();
-//            String methodName = joinPoint.getSignature().getName();
-//            logger.debug("Request: {} {}{} < {} ({}ms)", request.getMethod(), request.getRequestURI(),
-//                    params, request.getRemoteHost(), end - start);
-//            logger.info("method Name :  [" + methodName+"]");
-//
-//            logger.info("response: " + (result));
-//        }
-//    }
+    @Around("com.example.webPOS.aop.RequestLoggingAspect.onRequest()") // 4
+    public Object doLogging(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpServletRequest request = // 5
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+        Map<String, String[]> paramMap = request.getParameterMap();
+        String params = paramMap.isEmpty() ? "" : " [" + paramMapToString(paramMap) + "]";
+
+        Object result = null;
+        long start = System.currentTimeMillis();
+        try {
+            result = joinPoint.proceed(joinPoint.getArgs()); // 6
+            return result;
+        } finally {
+
+            long end = System.currentTimeMillis();
+            String methodName = joinPoint.getSignature().getName();
+            logger.debug("Request: {} {}{} < {} ({}ms)", request.getMethod(), request.getRequestURI(),
+                    params, request.getRemoteHost(), end - start);
+            logger.info("method Name :  [" + methodName+"]");
+
+            logger.info("response: " + (result));
+        }
+    }
 }

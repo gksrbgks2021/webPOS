@@ -45,7 +45,7 @@
     <li><a href="/trade/actionName/<%=UrlParamAction.ORDER%>" class="nav-link">
         <button type="submit">상품 발주</button>
     </a></li>
-    <li><a href="#" class="nav-link">
+    <li><a href="/statistic" class="nav-link">
         <button type="submit">통계</button>
     </a></li>
     </c:when>

@@ -27,7 +27,6 @@ public class HomeController {
         this.storeInfoService = storeInfoService;
     }
 
-
     @GetMapping("/home")
     public String showbutton(Model model,
                              @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member) {
@@ -82,12 +81,11 @@ public class HomeController {
         if (action.equals("order")) {
             sb.append("redirect:").append("/order/").append(storeName);
         } else if (action.equals("sale")) {
-            sb.append("redirect:").append("/order/").append(storeName);
+            sb.append("redirect:").append("/sale/").append(storeName);
         }
 
         return sb.toString();
     }
-
 
     //작업이 끝나고 홈으로
     @GetMapping("/finish")
@@ -97,5 +95,12 @@ public class HomeController {
         model.addAttribute("role", member.getRole());
 
         return "home/main";
+    }
+
+    @GetMapping("/statistic")
+    public String handleStatistic(Model model){
+        model.addAttribute("storeList", storeInfoService.findAllStore());
+
+        return "home/statistic/selectQuery";
     }
 }

@@ -113,6 +113,8 @@ public class TradeLogDaoImpl implements TradeLogDAO {
 		}
 	}
 
+//y-m-d
+
 	@Override
 	public Map<String, String> profitFirst(String start, String end, String period) {
 		if (period.equals("week")) {
@@ -198,7 +200,6 @@ public class TradeLogDaoImpl implements TradeLogDAO {
 		} else {
 			return null;
 		}
-
 	}
 
 	@Override

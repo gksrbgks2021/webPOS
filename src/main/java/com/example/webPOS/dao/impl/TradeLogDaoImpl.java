@@ -391,7 +391,7 @@ public class TradeLogDaoImpl implements TradeLogDAO {
             return null;
         }
 
-        return jdbcTemplate.query(query, rs -> {
+        List<Map.Entry<String, Integer>>  ret = jdbcTemplate.query(query, rs -> {
             List<Map.Entry<String, Integer>> result = new ArrayList<>();
             while (rs.next()) {
                 String periodLabel = rs.getString("period");
@@ -401,6 +401,9 @@ public class TradeLogDaoImpl implements TradeLogDAO {
             }
             return result;
         }, storeName, start, end);
+        ret.sort(Map.Entry.comparingByKey());
+
+        return ret;
     }
 
     public List<Map.Entry<String, Integer>> getRevenueRanking(String start, String end) {

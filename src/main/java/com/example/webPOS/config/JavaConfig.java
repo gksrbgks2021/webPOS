@@ -29,7 +29,7 @@ public class JavaConfig {
         DataSource ds = new DataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds.setUrl("jdbc:mysql://localhost/posdb?characterEncoding=utf8&serverTimezone=UTC");
-        ds.setUsername("posmanager");
+        ds.setUsername("posadmin");
         ds.setPassword("admin1234");
         ds.setInitialSize(2);
         ds.setMaxActive(10);

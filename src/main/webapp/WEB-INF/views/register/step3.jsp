@@ -9,9 +9,7 @@
 </head>
 <body>
 <p><strong>
-    <%=
-    (String) session.getAttribute("loginMember")
-        %>님</strong>
+    ${name}님</strong>
     회원 가입을 완료했습니다.</p>
 <p><a href='/' />[로그인 페이지 이동]</a></p>
 </body>

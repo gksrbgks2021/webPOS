@@ -33,7 +33,7 @@
     </a></li>
     <c:choose>
     <c:when test="${role eq 'staff'}">
-    <li><a href="/trade/actionName/<%=UrlParamAction.ORDER%>" class="nav-link">
+    <li><a href="/trade/actionName/<%=UrlParamAction.SALE%>" class="nav-link">
         <button type="submit">상품 판매</button>
     </a></li>
     <li><a href="/statistic" class="nav-link">

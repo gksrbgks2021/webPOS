@@ -86,7 +86,7 @@ public class HomeController {
         return sb.toString();
     }
 
-    //작업이 끝나고 홈으로
+    //작업이 끝나고 홈으로 리턴
     @GetMapping("/finish")
     public String returnHome(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member,
                              Model model){

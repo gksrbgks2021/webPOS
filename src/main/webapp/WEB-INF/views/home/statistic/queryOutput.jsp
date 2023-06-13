@@ -17,7 +17,7 @@
             <thead>
             <tr>
                 <th>편의점 이름</th>
-                <th>순이익</th>
+                <th>매출액</th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +31,7 @@
         </table>
         <br>
         <c:if test="${not empty revenueMap and not empty revenueMap[0]}">
-            <p>해당 기간에 매출 1등한 편의점은 "${revenueMap[0].key}" 이고 매출액은 "${revenueMap[0].value}" 입니다.</p>
+            <p>해당 기간에 매출 1등한 편의점은 "${revenueMap[0].key}" 이고 수익은 "${revenueMap[0].value}" 입니다.</p>
         </c:if>
 
 <br>

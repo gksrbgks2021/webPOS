@@ -79,9 +79,16 @@ public class AdminController {
                 return "home/admin/error";
             }
         } else if (action.equals(UrlParamAction.PROCESS_DELETE_PRODUCT)) {
-            productMangeService.deleteByProductId(Long.parseLong(request.getParameter("productId")));
-            model.addAttribute("infoMsg", "삭제 성공했습니다");
-            return "home/admin/success";
+            try {
+                productMangeService.deleteByProductId(Long.parseLong(request.getParameter("productId")));
+                model.addAttribute("infoMsg", "삭제 성공했습니다");
+                return "home/admin/success";
+
+            } catch (Exception e) {
+                model.addAttribute("errorMsg", "상품이 다른 편의점에 존재함으로 삭제할 수 없습니다");
+                return "home/admin/error";
+            }
+
         } else if (action.equals(UrlParamAction.PROCESS_DELETE_MEMBER)) {
             System.out.println("==삭제 메소드 들어옴==");
             memberService.deleteById(Long.parseLong(request.getParameter("id")));

@@ -96,7 +96,7 @@ public class ProductDaoImpl implements ProductDAO {
         return results.isEmpty() ? null : results.get(0);
     }
     @Override
-    public int deleteById(Long pID){
+    public int deleteById(Long pID) {
         String sql = "DELETE FROM PRODUCT WHERE PRODUCTID = ?";
         return jdbcTemplate.update(sql, pID);
     }

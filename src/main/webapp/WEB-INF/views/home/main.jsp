@@ -50,11 +50,14 @@
     </a></li>
     </c:when>
     <c:when test="${role eq 'admin'}">
-    <li><a href="/admin?selectedAction=<%=UrlParamAction.MANAGE_MEMBER%>" class="nav-link">
-        <button type="submit">회원 삭제</button>
+    <li><a href="/admin/actionName/<%=UrlParamAction.MANAGE_MEMBER%>" class="nav-link">
+        <button type="submit">회원 관리</button>
     </a></li>
-    <li><a href="/admin?selectedAction=<%=UrlParamAction.MANAGE_PRODUCT%>" class="nav-link">
+    <li><a href="/admin/actionName/<%=UrlParamAction.MANAGE_PRODUCT%>" class="nav-link">
         <button type="submit">상품 등록</button>
+    </a></li>
+    <li><a href="/admin/actionName/<%=UrlParamAction.DELETE_PRODUCT%>" class="nav-link">
+        <button type="submit">상품 삭제</button>
     </a></li>
     </c:when>
     </c:choose>

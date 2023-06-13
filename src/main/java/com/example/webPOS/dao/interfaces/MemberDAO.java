@@ -12,6 +12,7 @@ public interface MemberDAO {
     Member findById(Long id);
     void save(Member member);//회원가입 후 db에 저장 메소드
     List<Member> selectAll();//리스트로 화면단 뿌리기
-    int delete(Member member);
+    public int deleteById(Long id);
+    public void update(Member member); //멤버 정보 업데이트 하기.
 
 }

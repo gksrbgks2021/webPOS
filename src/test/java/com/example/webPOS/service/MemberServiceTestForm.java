@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-class MemberRegisterServiceTestForm {
+class MemberServiceTestForm {
 
     @Autowired
     private MemberDAO memberDao;
@@ -25,7 +25,7 @@ class MemberRegisterServiceTestForm {
         registerForm.setName("John Doe");
         registerForm.setRole("staff");
 
-        MemberRegisterService memberService = new MemberRegisterService(memberDao);
+        MemberService memberService = new MemberService(memberDao);
 
         // When
         Long memberId = memberService.regist(registerForm);

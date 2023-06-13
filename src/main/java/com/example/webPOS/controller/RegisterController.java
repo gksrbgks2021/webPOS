@@ -1,25 +1,23 @@
 package com.example.webPOS.controller;
 
-import com.example.webPOS.dto.form.LoginForm;
 import com.example.webPOS.dto.form.RegisterForm;
-import com.example.webPOS.service.MemberRegisterService;
+import com.example.webPOS.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegisterController {
 
-    MemberRegisterService memberRegisterService;
+    MemberService memberService;
 
     @Autowired
-    RegisterController(MemberRegisterService memberRegisterService){
-        this.memberRegisterService = memberRegisterService;
+    RegisterController(MemberService memberService){
+        this.memberService = memberService;
     }
 
     @PostMapping("register/")
@@ -59,7 +57,7 @@ public class RegisterController {
         RegisterForm reg = new RegisterForm(e,p,cp,n,r);
 
         try {
-            memberRegisterService.regist(reg);
+            memberService.regist(reg);
             model.addAttribute("name",n);
             return "register/step3";
         } catch (Exception ex) {//이메일 중복.

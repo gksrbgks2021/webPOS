@@ -9,5 +9,7 @@ public interface ProductDAO {
     void save(Product product);
     Product findById(Long ProductID);
 
+    public int deleteById(Long pID);
+
     Product findByName(String name);
 }

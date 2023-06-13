@@ -6,14 +6,15 @@ import com.example.webPOS.dto.form.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 //config에 수동 빈 등록함.
-public class MemberRegisterService {
+public class MemberService {
 
     private MemberDAO memberDao;
 
     @Autowired
-    public MemberRegisterService(MemberDAO memberDao) {
+    public MemberService(MemberDAO memberDao) {
         this.memberDao = memberDao;
     }
 
@@ -38,6 +39,29 @@ public class MemberRegisterService {
         if (member == null) {
             throw new Exception("MemberNotFoundException");
         }
-        return memberDao.delete(member);
+        return memberDao.deleteById(member.getId());
+    }
+
+    //회원 수정
+    public void updateMember(long id)throws  Exception{
+        Member member = memberDao.findById(id);
+        try{
+            memberDao.update(member);
+        }catch (Exception e){
+            throw new Exception("update 에 실패하였습니다");
+        }
+    }
+
+    public int deleteById(Long id) throws Exception {
+        int ret = 0;
+        try{
+            ret = memberDao.deleteById(id);
+        }catch (Exception e){
+            throw new Exception("삭제실패했음");
+        }
+        return ret;
+    }
+    public List<Member> showMember(){
+        return memberDao.selectAll();
     }
 }

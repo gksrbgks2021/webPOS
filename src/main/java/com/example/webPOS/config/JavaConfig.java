@@ -2,7 +2,7 @@ package com.example.webPOS.config;
 
 import com.example.webPOS.dao.impl.*;
 import com.example.webPOS.dao.interfaces.*;
-import com.example.webPOS.service.MemberRegisterService;
+import com.example.webPOS.service.MemberService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -57,8 +57,8 @@ public class JavaConfig {
     }
 
     @Bean
-    public MemberRegisterService memberRegisterService(MemberDAO memberDAO){
-        return new MemberRegisterService(memberDAO);
+    public MemberService memberRegisterService(MemberDAO memberDAO){
+        return new MemberService(memberDAO);
     }
 
     /**

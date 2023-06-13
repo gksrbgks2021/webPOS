@@ -61,7 +61,7 @@ public class MemberDaoImpl implements MemberDAO {
                 pstmt.setString(2, member.getPassword());
                 pstmt.setString(3, member.getName());
                 pstmt.setString(4, member.getRole());
-                pstmt.setTimestamp(5, Timestamp.valueOf(member.getDatetime()));
+                pstmt.setTimestamp(5, Timestamp.valueOf(member.getRegdate()));
                 return pstmt;
             }
         }, keyHolder);
@@ -119,8 +119,28 @@ public class MemberDaoImpl implements MemberDAO {
     }
 
     @Override
-    public int delete(Member member){
+    public int deleteById(Long id){
         String sql = "delete * from member where ID = ?";
-        return jdbcTemplate.update(sql, member.getId());
+        return jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public void update(Member member) {
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(
+                        "update MEMBER set EMAIL = ?, PASSWORD = ?, NAME = ?, ROLE = ?, REGDATE = ? where ID = ?");
+
+                pstmt.setString(1, member.getEmail());
+                pstmt.setString(2, member.getPassword());
+                pstmt.setString(3, member.getName());
+                pstmt.setString(4, member.getRole());
+                pstmt.setTimestamp(5, Timestamp.valueOf(member.getRegdate()));
+                pstmt.setLong(6, member.getId());
+                return pstmt;
+            }
+        });
+    }
+
 }

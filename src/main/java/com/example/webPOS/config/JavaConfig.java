@@ -2,7 +2,6 @@ package com.example.webPOS.config;
 
 import com.example.webPOS.dao.impl.*;
 import com.example.webPOS.dao.interfaces.*;
-import com.example.webPOS.dto.Inventory;
 import com.example.webPOS.service.MemberRegisterService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;

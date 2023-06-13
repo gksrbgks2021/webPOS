@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-class TradeLogDaoImplTest {
+class TradeLogDaoImplListVerTest {
 
     @Autowired
     private ProductDAO productDAO;

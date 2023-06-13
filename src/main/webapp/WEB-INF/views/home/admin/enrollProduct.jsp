@@ -11,7 +11,7 @@
 
 <h2>상품 등록 페이지</h2>
 
-<form action="admin/actionName/<%=UrlParamAction.PROCESS_ENROLL_PRODUCT%>" method="get">
+<form action="processName/<%=UrlParamAction.PROCESS_ENROLL_PRODUCT%>" method="post">
     <label for="name">상품 이름:</label><br>
         <input type="text" id="name" name="name"><br>
     <label for="netprice">원가:</label><br>

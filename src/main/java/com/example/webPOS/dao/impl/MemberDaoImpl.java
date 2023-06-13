@@ -120,7 +120,7 @@ public class MemberDaoImpl implements MemberDAO {
 
     @Override
     public int deleteById(Long id){
-        String sql = "delete * from member where ID = ?";
+        String sql = "delete from member where ID = ?";
         return jdbcTemplate.update(sql, id);
     }
 

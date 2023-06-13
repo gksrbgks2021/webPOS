@@ -30,7 +30,6 @@ public class HomeController {
     @GetMapping("/home")
     public String showbutton(Model model,
                              @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member) {
-
         if (member != null) {
 
             model.addAttribute("name", member.getName());
@@ -91,10 +90,14 @@ public class HomeController {
     @GetMapping("/finish")
     public String returnHome(@SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Member member,
                              Model model){
+        if(member == null){
+            System.out.println("세션 없어짐");
+            return "redirect:/login";
+        }
         model.addAttribute("name", member.getName());
         model.addAttribute("role", member.getRole());
 
-        return "home/main";
+        return "redirect:home/main";
     }
 
     @GetMapping("/statistic")

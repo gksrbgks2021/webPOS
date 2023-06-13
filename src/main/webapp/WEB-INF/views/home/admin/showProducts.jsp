@@ -29,7 +29,7 @@
       <td>${product.netPrice}</td>
       <td>${product.costPrice}</td>
       <td>
-        <form action="admin/actionName/<%=UrlParamAction.PROCESS_DELETE_PRODUCT%>" method="get">
+        <form action="processName/<%=UrlParamAction.PROCESS_DELETE_PRODUCT%>" method="post">
           <input type="hidden" name="productId" value="${product.productId}">
           <input type="submit" value="삭제">
         </form>

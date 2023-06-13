@@ -1,3 +1,4 @@
+<%@ page import="com.example.webPOS.constants.urlpath.UrlParamAction" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -30,11 +31,7 @@
       <td>${user.role}</td>
       <td>${user.regdate}</td>
       <td>
-        <form action="admin/actionName/editUser" method="get">
-          <input type="hidden" name="id" value="${user.id}">
-          <input type="submit" value="수정">
-        </form>
-        <form action="admin/actionName/deleteUser" method="get">
+        <form action="processName/<%=UrlParamAction.PROCESS_DELETE_MEMBER%>" method="post">
           <input type="hidden" name="id" value="${user.id}">
           <input type="submit" value="삭제">
         </form>

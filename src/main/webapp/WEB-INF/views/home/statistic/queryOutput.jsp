@@ -36,7 +36,7 @@
 
 <br>
         <table border="1">
-        <h3>${store} 편의점 통계 ${interval} 별로 조회</h3>
+        <h3>[${store}] 편의점 통계 ${interval} 별로 조회 결과</h3>
 
             <thead>
             <tr>
@@ -55,6 +55,9 @@
             </tbody>
         </table>
 
+<form action="/finish" method="get">
+    <button type="submit">메인 화면으로 돌아가기</button>
+</form>
 
 </body>
 </html>

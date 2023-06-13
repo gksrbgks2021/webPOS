@@ -403,9 +403,7 @@ public class TradeLogDaoImpl implements TradeLogDAO {
         }, storeName, start, end);
     }
 
-
     public List<Map.Entry<String, Integer>> getRevenueRanking(String start, String end) {
-
 
         String query = "SELECT storename, SUM(totalprice) AS revenue " +
                 "FROM tradelog " +

@@ -2,7 +2,7 @@
 
 ### 시연 영상
 
-[![Video Label](http://img.youtube.com/vi/59USvjy2toI/0.jpg)](https://youtu.be/VwQjrP1FP-Q)
+[![Video Label](http://img.youtube.com/vi/VwQjrP1FP-Q/0.jpg)](https://youtu.be/VwQjrP1FP-Q)
 
 # 구성
 | 구분 정보 | 항목 |

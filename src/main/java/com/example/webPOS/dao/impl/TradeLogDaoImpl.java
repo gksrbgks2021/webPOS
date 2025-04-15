@@ -35,7 +35,7 @@ public class TradeLogDaoImpl implements TradeLogDAO {
     }
 
     @Override
-    public void save(TradeLog tradeLog) {
+    public TradeLog save(TradeLog tradeLog) {
         setSqlQuery(
                 "INSERT INTO tradelog (productId, tradeDate, QUANTITYTRADED, TOTALPRICE, STATE, STORENAME)VALUES (?, ?, ?, ?, ?, ?)");
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -54,7 +54,10 @@ public class TradeLogDaoImpl implements TradeLogDAO {
             }
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
-        tradeLog.setId(keyValue.intValue());
+        assert keyValue != null;
+        tradeLog.setId(keyValue.longValue());
+        //설정 후 ALTER TABLE tradelog MODIFY COLUMN id BIGINT NOT NULL AUTO_INCREMENT; 설정했음
+        return tradeLog;
     }
 
     /**
@@ -320,14 +323,14 @@ public class TradeLogDaoImpl implements TradeLogDAO {
 
     @Override
     public TradeLog findById(Long productID) {
-        setSqlQuery("SELECT * FROM TRADELOG  WHERE ProductID = ?");
+        setSqlQuery("SELECT * FROM TRADELOG WHERE ID = ?");
 
         List<TradeLog> results = jdbcTemplate.query(getSqlQuery(), new RowMapper<TradeLog>() {
             @Override
             public TradeLog mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                 TradeLog tradeLog = new TradeLog();
-                tradeLog.setId(rs.getInt("id"));
+                tradeLog.setId(rs.getLong("id"));
                 tradeLog.setProductId(rs.getLong("productId"));
                 tradeLog.setTradeDate(rs.getTimestamp("tradeDate").toLocalDateTime());
                 tradeLog.setQuantityTraded(rs.getInt("quantityTraded"));

@@ -4,7 +4,7 @@ package com.example.webPOS.vo;
 import java.time.LocalDateTime;
 
 public class TradeLog {
-    private int id; //자동 증가.
+    private Long id; //자동 증가.
     private Long productId; //이미 있는 id만 가져와야함.
     private LocalDateTime tradeDate;//거래날짜
     private int quantityTraded;
@@ -13,11 +13,12 @@ public class TradeLog {
     private String storeName;
 
     public TradeLog(){}
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

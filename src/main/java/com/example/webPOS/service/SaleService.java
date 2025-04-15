@@ -59,9 +59,7 @@ public class SaleService implements TradeService {
                 sb.append(productName).
                         append("상품이 ").
                         append("없습니다.<br/>");
-
             }
-
         }
         if(sb.length() > 0) {
             System.out.println("에러 메시지 출력");

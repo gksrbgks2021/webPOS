@@ -29,6 +29,7 @@ class ProductDaoImplTest {
         product.setNetPrice(100L);
         product.setCostPrice(50L);
         product.setName("Test Product");
+
     }
 
     @Test

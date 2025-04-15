@@ -5,6 +5,7 @@ import com.example.webPOS.dto.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,18 +24,16 @@ class MemberDaoImplTest {
         assertEquals(rs.getEmail(), email);//요청한 이메일과 받아온 이메일이 동일한지 확인
         System.out.println(rs.getEmail());
     }
-
+    @Transactional
     @Test
     void 회원가입테스트() {
-
         Member member = new Member(
-                "password123",
-                "John Doe",
-                "test@example.com",
+                "password1234",
+                "Chris Brown",
+                "chris@example.com",
                 "member",
                 LocalDateTime.now()
         );
-
         memberDAO.save(member);
 
         Member rs = memberDAO.findByEmail(member.getEmail());

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TradeLogDAO {
-    void save(TradeLog tradeLog);
+    TradeLog save(TradeLog tradeLog);
     Map<String, Integer> getProfit(String start, String end, String StoreName, String period);
     Map<String, String> profitFirst(String start, String end, String period);
     Map<String, String> revenueFirst(String start, String end, String period);

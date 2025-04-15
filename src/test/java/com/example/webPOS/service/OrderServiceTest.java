@@ -1,6 +1,7 @@
 package com.example.webPOS.service;
 
 import com.example.webPOS.config.JavaConfig;
+import com.example.webPOS.constants.TradeState;
 import com.example.webPOS.dao.interfaces.InventoryDAO;
 import com.example.webPOS.dao.interfaces.ProductDAO;
 import com.example.webPOS.dao.interfaces.TradeLogDAO;
@@ -69,7 +70,7 @@ class OrderServiceTest {
         // given
         String storeName = "Store1";
         TradeLog tradeLog = new TradeLog();
-        tradeLog.setId(1);
+        tradeLog.setId(1L);
         tradeLog.setProductId(productId);
         tradeLog.setTradeDate(LocalDateTime.now());
         tradeLog.setQuantityTraded(10);
@@ -117,12 +118,12 @@ class OrderServiceTest {
     public void testOrder() {
         // given
         TradeLog tradeLog = new TradeLog();
-        tradeLog.setId(1);
+        tradeLog.setId(1L);
         tradeLog.setProductId(1L);
         tradeLog.setTradeDate(LocalDateTime.now());
         tradeLog.setQuantityTraded(10);
         tradeLog.setTotalPrice(1000);
-        tradeLog.setState("completed");
+        tradeLog.setState(TradeState.SALED.getValue());
         tradeLog.setStoreName("Store1");
 
         List<TradeLog> tradeLogList = Arrays.asList(tradeLog);
@@ -139,7 +140,6 @@ class OrderServiceTest {
         //time : 1 은 해당 메서드가 1번 호출되었는지 의미
         verify(tradeLogDAO, times(1)).save(tradeLog);
         verify(inventoryDAO, times(1)).insert(anyLong(), anyInt(), anyString());
-
     }
 
     @AfterEach

@@ -1,5 +1,6 @@
 package com.example.webPOS.service;
 
+import com.example.webPOS.config.JavaConfig;
 import com.example.webPOS.dao.interfaces.InventoryDAO;
 import com.example.webPOS.dao.interfaces.ProductDAO;
 import com.example.webPOS.dao.interfaces.TradeLogDAO;
@@ -9,9 +10,15 @@ import com.example.webPOS.vo.TradeLog;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,9 +30,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-@Transactional
+@SpringBootTest
+//@ContextConfiguration(classes = {JavaConfig.class})
 class OrderServiceTest {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @InjectMocks
     private OrderService orderService;
@@ -42,31 +52,43 @@ class OrderServiceTest {
     @Mock
     private InventoryDAO inventoryDAO;
 
+
+    private Long productId;
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        if (jdbcTemplate == null) {
+            throw new IllegalStateException("JdbcTemplate is null");
+        }
+        productId = getMaxProductId() + 1L;
     }
 
+    @Transactional
     @Test
     public void testOrder2() {
         // given
+        String storeName = "Store1";
         TradeLog tradeLog = new TradeLog();
         tradeLog.setId(1);
-        tradeLog.setProductId(1000000L);
+        tradeLog.setProductId(productId);
         tradeLog.setTradeDate(LocalDateTime.now());
         tradeLog.setQuantityTraded(10);
         tradeLog.setTotalPrice(1000);
         tradeLog.setState("completed");
-        tradeLog.setStoreName("Store1");
+        tradeLog.setStoreName(storeName);
 
         List<TradeLog> tradeLogList = Arrays.asList(tradeLog);
-        // stubbing
-        when(inventoryDAO.getQuantityByProductId(anyLong(), anyString())).thenReturn(1);
+        // Mocking
+        when(inventoryDAO.existProduct(productId, storeName)).thenReturn(true);
+        when(inventoryDAO.getQuantityByProductId(anyLong(),anyString()))
+                .thenReturn(1)
+                .thenReturn(11);
+
         // when
+        int beforeVal = inventoryDAO.getQuantityByProductId( tradeLog.getProductId(), tradeLog.getStoreName());
         orderService.order(tradeLogList);
-        // then
-        int beforeVal = inventoryDAO.getQuantityByProductId(tradeLog.getProductId(), tradeLog.getStoreName());
-        //update호출되었는지
+
+        // then: update호출되었는지
         verify(tradeLogDAO, times(1)).save(tradeLog);
         verify(inventoryDAO, times(1)).update(
                 eq(tradeLog.getProductId()),
@@ -75,10 +97,20 @@ class OrderServiceTest {
                 eq(true)
         );
         // 데이터베이스에서 값을 확인하고 assertEquals를 사용하여 검증
+        assertEquals(beforeVal + tradeLog.getQuantityTraded(),
+                inventoryDAO.getQuantityByProductId(tradeLog.getProductId(), tradeLog.getStoreName()));
+        assertNotEquals(beforeVal,
+                inventoryDAO.getQuantityByProductId(tradeLog.getProductId(), tradeLog.getStoreName()));
 
-        assertEquals(tradeLog.getQuantityTraded(), inventoryDAO.getQuantityByProductId(tradeLog.getProductId(), tradeLog.getStoreName()));
-        assertNotEquals(beforeVal, inventoryDAO.getQuantityByProductId(tradeLog.getProductId(), tradeLog.getStoreName()));
+    }
+    public Long getMaxProductId() {
+        String sql = "SELECT MAX(productId) FROM tradelog";
+        Integer maxProductId = jdbcTemplate.queryForObject(sql, Integer.class);
 
+        // null 처리: 테이블이 비어 있을 경우 0 반환
+        return (maxProductId != null) ?
+                Long.valueOf(maxProductId)
+                : 0L;
     }
 
     @Test

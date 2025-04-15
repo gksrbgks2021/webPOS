@@ -318,7 +318,6 @@ public class TradeLogDaoImpl implements TradeLogDAO {
         }
 }
 
-
     @Override
     public TradeLog findById(Long productID) {
         setSqlQuery("SELECT * FROM TRADELOG  WHERE ProductID = ?");

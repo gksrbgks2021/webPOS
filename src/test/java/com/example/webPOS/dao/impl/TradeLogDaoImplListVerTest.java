@@ -23,9 +23,10 @@ class TradeLogDaoImplListVerTest {
     TradeLogDAO tradeLogDAO;
 
     @Test
+    @Transactional
     void save() {
         TradeLog tradeLog = new TradeLog();
-        tradeLog.setProductId(100000L);
+        tradeLog.setProductId(1232200L);
         tradeLog.setTradeDate(LocalDateTime.now());
         tradeLog.setQuantityTraded(10);
         tradeLog.setTotalPrice(10000);

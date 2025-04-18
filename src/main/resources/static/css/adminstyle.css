@@ -1,0 +1,95 @@
+/* 관리 페이지 스타일: 흰색/파란색 테마 */
+.member-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    background-color: #cce5ff;
+    color: #004085;
+    padding: 16px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-row:nth-child(odd) {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s;
+}
+
+.table-row:hover {
+    background-color: #e0f7fa;
+}
+
+.table-cell {
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+    color: #333333;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.table-cell:hover {
+    background-color: #e9ecef;
+}
+
+.table-cell:last-child {
+    border-bottom: none;
+}
+
+.table-row {
+    height: 60px;
+}
+
+h2 {
+    color: #007bff;
+    margin-bottom: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Button styles */
+.edit-btn, .delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Add a responsive design for smaller screens */
+@media (max-width: 768px) {
+    .member-table {
+        font-size: 14px;
+    }
+
+    .table-header, .table-cell {
+        padding: 12px;
+    }
+}

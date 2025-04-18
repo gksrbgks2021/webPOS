@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Controller
 public class AdminController {
@@ -40,20 +42,34 @@ public class AdminController {
 //</form>
 
     @GetMapping("/admin/actionName/{action}")
-    public String showAdminPage(
-            @PathVariable("action") String action, Model model,
+    @ResponseBody
+    public Object showAdminPage(
+            @PathVariable("action") String action,
+            Model model,
+            @RequestParam(value = "format", defaultValue = "jsp") String format,
             HttpServletRequest request) throws Exception {
+        // 데이터 조회
+        Object data = null;
+        String viewName = "home/main";
 
         if (action.equals(UrlParamAction.MANAGE_MEMBER)) {
-            model.addAttribute("userList", memberService.showMember());
-            return "home/admin/manageUser";
-        } else if (action.equals(UrlParamAction.MANAGE_PRODUCT)) {//상품등록
-            return "home/admin/enrollProduct";
-        }else if (action.equals(UrlParamAction.DELETE_PRODUCT)) {
-            model.addAttribute("productList", productMangeService.findAll());
-            return "home/admin/showProducts";
+            data = memberService.showMember();
+            model.addAttribute("userList", data);
+            viewName = "home/admin/manageUser";
+        } else if (action.equals(UrlParamAction.MANAGE_PRODUCT)) {
+            data = new HashMap<String, String>() {{ put("view", "enrollProduct"); }};
+            viewName = "home/admin/enrollProduct";
+        } else if (action.equals(UrlParamAction.DELETE_PRODUCT)) {
+            data = productMangeService.findAll();
+            model.addAttribute("productList", data);
+            viewName = "home/admin/showProducts";
         }
-        return "home/main";
+        // format에 따라 반환
+        if ("json".equals(format)) {
+            return data; // JSON으로 직렬화
+        } else {
+            return viewName; // JSP 뷰 이름
+        }
     }
 
     @PostMapping("admin/actionName/processName/{process}")

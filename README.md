@@ -1,8 +1,7 @@
 # 웹 으로 작성한 편의점 POS application.
 
-### 시연 영상
+![image](https://github.com/user-attachments/assets/e5d4b3aa-cd03-4985-ad7a-cc186ab8110f)
 
-[![Video Label](http://img.youtube.com/vi/VwQjrP1FP-Q/0.jpg)](https://youtu.be/VwQjrP1FP-Q)
 
 # 구성
 | 구분 정보 | 항목 |
@@ -73,10 +72,39 @@
 
 
 # 핵심 기능 코드
+- 상품 관리
+- 쿼리 구현부
+- 기간 별 수익 통계
+- 회원 관리
+- AOP 모니터링
+
+
+
+
+### 상품 관리
+- 등록된 상품을 조회하고 수량을 선택해 주문할수 있다.
+![image](https://github.com/user-attachments/assets/d66d364d-153f-4e5e-afdd-bb040da419cf)
+
+```javascript
+ // 선택한 상품을 테이블에 추가
+        let row = table.insertRow();
+        let nameCell = row.insertCell(0);
+        let quantityCell = row.insertCell(1);
+        let priceCell = row.insertCell(2);
+        let deleteCell = row.insertCell(3); // 삭제 버튼을 위한 셀 추가
+        nameCell.innerHTML = name;
+        quantityCell.innerHTML = "<input type='number' name='quantity' min='1' value='1' onchange='updateTotalPrice()'>";
+        priceCell.innerHTML = netPrice;
+        // 삭제 버튼 추가
+        deleteCell.innerHTML = "<button onclick='deleteRow(this, \"" + name + "\")'>X</button>";
+
+        updateTotalPrice(); // 총 가격 업데이트
+```
 
 ### 쿼리 구현부
 - Data Access Obeject 는 [인터페이스 - 구현부 코드] 구조로 구성된다.
-![image](https://github.com/gksrbgks2021/webPOS/assets/39733405/deee433e-abd9-4815-a3a2-9f6fe44221ac)
+
+
 
 JdbcTemplate 을 사용하여 쿼리문을 구성하였다.
 ```java
@@ -145,7 +173,7 @@ public class MemberDaoImpl implements MemberDAO {
 
 ### 기간 별 수익 통계
 
-![image](https://github.com/gksrbgks2021/webPOS/assets/39733405/7f5626b0-da74-4efe-8621-200a4cf5d560)
+![image](https://github.com/user-attachments/assets/5a5cdbf7-07f1-4c44-ac8c-caedb42cb234)
 
 - qeury 문을 사용하여 집계 하였습니다.
 ```java
@@ -210,9 +238,17 @@ public class MemberDaoImpl implements MemberDAO {
 
 ```
 
+### 회원 관리
+- 관리자로 로그인하여 현재 회원을 삭제하거나 정보를 수정할 수 있다 
+
+![image](https://github.com/user-attachments/assets/48a6dfef-58d6-4141-a26b-3e331e92858a)
+
+
 ### AOP 사용한 모니터링
 
-- 조인포인트를 컨트롤러 폴더 전체로 하여, 현재 컨트롤러에 어떤 메소드에 들어왔고, 리턴값은 무엇인지, url 요청값은 무엇인지 로그를 봐서 프로젝트 코드 개발할 때 많은 도움이 되었다.
+- 조인포인트를 컨트롤러 폴더 전체로 설정하여, 다음을 확인할 수 있다
+  - 코드가 실행 메소드 이름, 리턴값은, url 요청값 등
+- 로그를 남겨 개발할 때 어느 부분에서 이슈가 발생했는지 파악 할 수 있다
 
 ![image](https://github.com/gksrbgks2021/webPOS/assets/39733405/b16c33bf-5eac-41a0-8027-783347efea1c)
 

@@ -5,6 +5,77 @@
 <html>
 <head>
     <title>상품 발주 페이지</title>
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .left-section {
+            width: 50%;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #ccc;
+        }
+        .right-section {
+            width: 50%;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+        .product-grid button {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .product-grid button:hover {
+            background-color: #005A9E;
+        }
+        .product-grid p {
+            text-align: center;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .summary {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #005A9E;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,9 +106,11 @@
                 let priceCell = row.cells[2];
                 let price = parseInt(priceCell.innerHTML);
                 priceCell.innerHTML = (quantity + 1) * costPrice;
-                updateTotalPrice();
+                // updateTotalPrice();
+                updateSummary();
 
                 return;
+
             }
         }
 
@@ -65,6 +138,30 @@
 
     function getTotalPrice(){
         return document.getElementById("totalPrice").innerText.replace('+','');
+    }
+
+    function getTotalPrice() {
+        return document.getElementById("totalPrice").innerText.replace('+', '');
+    }
+
+    function updateSummary() {
+        let table = document.getElementById("orderTable");
+        let rows = table.rows;
+        let totalPrice = 0;
+        let totalQuantity = 0;
+
+        // 총 가격과 총 수량 계산
+        for (let i = 1; i < rows.length; i++) {
+            let row = rows[i];
+            let quantityInput = row.cells[1].querySelector("input[type='number']");
+            let quantity = parseInt(quantityInput.value);
+            let price = parseInt(row.cells[2].innerHTML);
+            totalPrice += price;
+            totalQuantity += quantity;
+        }
+
+        document.getElementById("totalQuantity").innerHTML = totalQuantity;
+        document.getElementById("totalPrice").innerHTML = totalPrice;
     }
 
     function updateTotalPrice() {
@@ -139,46 +236,52 @@
         }
 
         // 총 가격 업데이트
-        updateTotalPrice();
+        // updateTotalPrice();
+        updateSummary();
     }
+
 
 </script>
 
-<h2>[판매 상품 조회]</h2>
-<p>판매할 상품을 선택해주세요.</p><br/>
-<div style="width:500px;">
-    <c:choose>
-        <c:when test="${empty productList}">
-            <p>상품 정보가 없습니다!</p>
-        </c:when>
-        <c:otherwise>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 10px;">
-                <c:forEach items="${productList}" var="product">
-                    <div>
-                        <button type="button" onclick="addProduct('${product.name}', ${product.costPrice})"
-                                style="width: 120px; aspect-ratio: 1/1;">${product.name}</button>
-                        <p>${product.costPrice}</p>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:otherwise>
-    </c:choose>
+<div class="container">
+    <div class="left-section">
+        <h2>[판매 상품 조회]</h2>
+        <p>판매할 상품을 선택해주세요.</p><br/>
+        <c:choose>
+            <c:when test="${empty productList}">
+                <p>상품 정보가 없습니다!</p>
+            </c:when>
+            <c:otherwise>
+                <div class="product-grid">
+                    <c:forEach items="${productList}" var="product">
+                        <div>
+                            <button type="button" onclick="addProduct('${product.name}', ${product.costPrice})">${product.name}</button>
+                            <p>${product.costPrice}</p>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
 
-    <br/>
-    <table id="orderTable">
-        <tr>
-            <th>상품 이름</th>
-            <th>상품 개수</th>
-            <th>총 가격</th>
-            <th>삭제</th>
-        </tr>
-    </table>
-    <br/>
-
-    <p>총 가격: <span id="totalPrice">0</span></p>
-    <br/>
-    <button type="button" onclick="submitOrder()">주문하기</button>
+    <div class="right-section">
+        <h2>주문 내역</h2>
+        <table id="orderTable">
+            <tr>
+                <th>상품 이름</th>
+                <th>상품 개수</th>
+                <th>총 가격</th>
+                <th>삭제</th>
+            </tr>
+        </table>
+        <div class="summary">
+            <p>총 수량: <span id="totalQuantity">0</span></p>
+            <p>총 합계: <span id="totalPrice">0</span></p>
+        </div>
+        <button class="submit-btn" type="button" onclick="submitOrder()">주문하기</button>
+    </div>
 </div>
+
 
 </body>
 </html>
